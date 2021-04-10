@@ -1,38 +1,41 @@
-plugins {
+ plugins {
     id 'com.android.application'
     id 'kotlin-android'
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.3"
+    compileSdkVersion 30 // 默认，编译的sdk版本
+    buildToolsVersion "30.0.3" // 默认，编译的工具版本号
 
     defaultConfig {
-        applicationId "com.petoi.kotlin.android.app"
-        minSdkVersion 16
-        targetSdkVersion 30
-        versionCode 1
-        versionName "1.0"
+        applicationId "com.petoi.kotlin.android.app"  // app的id
+        minSdkVersion 21 // 最低版本号
+        targetSdkVersion 30 // 目标版本号
+        versionCode 1 // 给机器进行版本覆盖比对的标识符，整型
+        versionName '1.0.0' // 给用户看的版本号名称
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"  // 自动测试
     }
 
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro' // 编译混淆
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8 // 指定编译Java编译版本
+        targetCompatibility JavaVersion.VERSION_1_8 // 指定编译Java编译版本
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '1.8' // 指定运行的JVM环境
     }
 }
 
-dependencies {
+dependencies { // 包依赖
+
+    // implementation： 该依赖库不会传递，只会在当前的module中生效
+    // api：该依赖方式会传递依赖库，当其他module使用了本module时，可以使用它的依赖
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.2.0'

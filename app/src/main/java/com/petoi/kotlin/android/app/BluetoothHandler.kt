@@ -1,0 +1,34 @@
+package com.petoi.kotlin.android.app
+
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.le.ScanResult
+import android.content.Intent
+import android.os.Build
+import androidx.appcompat.app.AppCompatActivity
+
+
+const val ENABLE_BLUETOOTH_REQUEST_CODE     = 1
+const val LOCATION_PERMISSION_REQUEST_CODE  = 2
+
+
+class BluetoothHandler {
+
+    // 获得蓝牙适配器
+    val adapter: BluetoothAdapter by lazy {
+        BluetoothAdapter.getDefaultAdapter()
+    }
+
+    // 蓝牙搜索器
+    val bleScanner by lazy {
+        adapter.bluetoothLeScanner
+    }
+
+    // 检测蓝牙设备是否可用，如果不可用弹出提示框，并跳转至蓝牙设置界面（系统默认）
+    fun promptEnableBluetooth(activity: AppCompatActivity) {
+        if (!adapter.isEnabled) {
+            val enableBtIntent = Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE)
+            activity.startActivityForResult(enableBtIntent, ENABLE_BLUETOOTH_REQUEST_CODE)
+        }
+    }
+
+}
