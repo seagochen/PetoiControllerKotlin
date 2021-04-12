@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -62,8 +63,13 @@ class MainActivity : AppCompatActivity() {
                 runOnUiThread {
                     searchBtn.isEnabled = true
 
-                    popupMenu(handler.peripherals.keys) { value ->
-                        Log.d("Selected", "----> $value")
+                    val keys = handler.deviceNames()
+
+                    if (keys.size > 0) {
+
+                        popupMenu(keys.toList()) { value ->
+                            Log.d("Selected", "----> $value")
+                        }
                     }
                 }
             }
@@ -71,14 +77,15 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    fun popupMenu(items: Set<String>, callback: (Int) -> Unit) {
+    fun popupMenu(items: List<String>, callback: (Int) -> Unit) {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this@MainActivity)
-        val data = arrayOf("1", "2", "3")
 
-//        TODO("需要研究一下把hashmap的keys转换成可用的Array")
+        // list<string> -> charsequence[]
+//        var cs : CharSequence[] =
+        var cs: Array<CharSequence> = items.toTypedArray()
 
         builder.setItems(
-            data
+            items.toTypedArray()
         ) { dialog, index ->
             // 把用户选择的设备编号通过回调函数的形式返回给用户
             callback(index)

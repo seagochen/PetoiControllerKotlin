@@ -59,6 +59,19 @@ class BluetoothHandler {
         isScanning = false
     }
 
+    // 返回给用户查找到的设备名称
+    fun deviceNames(): MutableList<String> {
+        val devices = mutableListOf<String>()
+
+        for (item in peripherals) {
+            devices.add(item.key)
+        }
+
+        print(devices)
+
+        return devices
+    }
+
 
     // BLE设备搜索回调类
     inner class LeScanCallback: ScanCallback() {
@@ -67,7 +80,7 @@ class BluetoothHandler {
 
             val device = result?.device
 
-            if (device != null) {
+            if (device != null && device.name != null && device.address != null) {
                 // for debug
                 Log.d("LeScanCallback", "found device: ${device.name} address: ${device.address}")
 
