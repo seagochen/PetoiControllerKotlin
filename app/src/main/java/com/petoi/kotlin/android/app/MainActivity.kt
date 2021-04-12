@@ -4,17 +4,17 @@ import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import java.util.*
+import kotlin.concurrent.schedule
 
 
 class MainActivity : AppCompatActivity() {
@@ -40,23 +40,53 @@ class MainActivity : AppCompatActivity() {
 
 
     // 用来绑定Android控件，使得Android控件与事件与代码中的类和方法一一对应
-    fun bindViews() {
+    fun bindSearchBtnView() {
         // 控件绑定
         searchBtn = findViewById(R.id.searchBtn)
 
         // 事件绑定
         searchBtn.setOnClickListener { view ->
 
-            if (searchBtn.text == "Search BLE") {
-                startBleScan()
-                searchBtn.text = "Stop Search"
+            // 首先设置按钮为不可用
+            searchBtn.isEnabled = false
 
-            } else {
-                searchBtn.text = "Search BLE"
+            // 启动ble查找
+            startBleScan()
+
+            // 设定一个延时器
+            Timer().schedule(3000) {
                 handler.stopScanPeripherals()
                 Log.d("MainActivity::Found", "found devices: ${handler.peripherals.size}")
+
+                // 按钮可用
+                runOnUiThread {
+                    searchBtn.isEnabled = true
+
+                    popupMenu(handler.peripherals.keys) { value ->
+                        Log.d("Selected", "----> $value")
+                    }
+                }
             }
         }
+    }
+
+
+    fun popupMenu(items: Set<String>, callback: (Int) -> Unit) {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this@MainActivity)
+        val data = arrayOf("1", "2", "3")
+
+//        TODO("需要研究一下把hashmap的keys转换成可用的Array")
+
+        builder.setItems(
+            data
+        ) { dialog, index ->
+            // 把用户选择的设备编号通过回调函数的形式返回给用户
+            callback(index)
+            Log.d("test", "test")
+
+            dialog.dismiss()
+        }
+        builder.show()
     }
 
 
@@ -65,7 +95,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        bindViews()
+        // 绑定BLE搜索按钮
+        bindSearchBtnView()
     }
 
 
@@ -126,9 +157,11 @@ class MainActivity : AppCompatActivity() {
         runOnUiThread {
             var alert = AlertDialog.Builder(this)
             alert.setTitle("Location permission required")
-                .setMessage("Starting from Android M (6.0), " +
-                        "the system requires apps to be granted location access in " +
-                        "order to scan for BLE devices.")
+                .setMessage(
+                    "Starting from Android M (6.0), " +
+                            "the system requires apps to be granted location access in " +
+                            "order to scan for BLE devices."
+                )
                 .setCancelable(false).setPositiveButton(android.R.string.ok) { _, _ ->
                     requestPermission(
                         Manifest.permission.ACCESS_FINE_LOCATION,

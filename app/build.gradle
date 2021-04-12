@@ -36,7 +36,6 @@ dependencies { // 包依赖
 
     // implementation： 该依赖库不会传递，只会在当前的module中生效
     // api：该依赖方式会传递依赖库，当其他module使用了本module时，可以使用它的依赖
-
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.2.0'
     implementation 'androidx.appcompat:appcompat:1.1.0'
