@@ -9,7 +9,9 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -33,11 +35,29 @@ class MainActivity : AppCompatActivity() {
                 PackageManager.PERMISSION_GRANTED
     }
 
+    // 蓝牙设备搜索按钮
+    lateinit var searchBtn: Button
+
+
+    // 用来绑定Android控件，使得Android控件与事件与代码中的类和方法一一对应
+    fun bindViews() {
+        // 控件绑定
+        searchBtn = findViewById(R.id.searchBtn)
+
+        // 事件绑定
+        searchBtn.setOnClickListener { view ->
+//            print("hello world!")
+            Log.d("MainActivity", "hello world")
+        }
+    }
+
 
     // Android Activity初始化后的调用函数
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        bindViews()
     }
 
 
@@ -80,18 +100,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // 用户点击了搜索ble按钮
-    fun searchBleClicked(view: View) {
-//        handler.()
-        println("hello world")
-    }
-
     // 开始ble搜索功能
     private fun startBleScan() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !isLocationPermissionGranted) {
             requestLocationPermission()
         }
-        else { /* TODO: Actually perform scan */ }
+        else {
+            handler.startScanPeripherals()
+        }
     }
 
     // 向用户发起权限请求
