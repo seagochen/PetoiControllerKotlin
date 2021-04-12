@@ -46,8 +46,16 @@ class MainActivity : AppCompatActivity() {
 
         // 事件绑定
         searchBtn.setOnClickListener { view ->
-//            print("hello world!")
-            Log.d("MainActivity", "hello world")
+
+            if (searchBtn.text == "Search BLE") {
+                startBleScan()
+                searchBtn.text = "Stop Search"
+
+            } else {
+                searchBtn.text = "Search BLE"
+                handler.stopScanPeripherals()
+                Log.d("MainActivity::Found", "found devices: ${handler.peripherals.size}")
+            }
         }
     }
 
