@@ -89,7 +89,6 @@ open class BluetoothHandler {
         if (writeChar != null) {
             with(writeChar) {
                 writeChar.setValue(msg)
-//            writeChar.writeType = BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT
                 selectedGatt?.writeCharacteristic(writeChar)
             }
         }

@@ -10,9 +10,7 @@ import java.util.*
 @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
 class BlueGattCallbackImp : BluetoothGattCallback() {
 
-    private val SERVICES_UUID   = "00001800-0000-1000-8000-00805f9b34fb"    //服务的UUID
-    private val WRITE_UUID      = "0000ffe2-0000-1000-8000-00805f9b34fb"    //写入特征的UUID
-    private val NOTIFY_UUID     = "00002a00-0000-1000-8000-00805f9b34fb"    //监听特征的UUID
+
 
     var writeCharacteristic:    BluetoothGattCharacteristic? = null
     var notifyCharacteristic:   BluetoothGattCharacteristic? = null
@@ -57,9 +55,11 @@ class BlueGattCallbackImp : BluetoothGattCallback() {
         val uuid = characteristic?.uuid
         val value = characteristic?.value
 
+        val strValue = value?.let { String(it) }
+
         when (status) {
             BluetoothGatt.GATT_SUCCESS -> {
-                Log.i("BluetoothGattCallback", "Wrote to characteristic $uuid | value: ${value.toString()}")
+                Log.i("BluetoothGattCallback", "Wrote to characteristic $uuid | value: $strValue")
             }
             BluetoothGatt.GATT_INVALID_ATTRIBUTE_LENGTH -> {
                 Log.e("BluetoothGattCallback", "Write exceeded connection ATT MTU!")
@@ -84,9 +84,11 @@ class BlueGattCallbackImp : BluetoothGattCallback() {
         val uuid = characteristic?.uuid
         val value = characteristic?.value
 
+        val strVal = value?.let { String(it) }
+
         when (status) {
             BluetoothGatt.GATT_SUCCESS -> {
-                Log.i("BluetoothGattCallback", "Read characteristic $uuid:\n${value.toString()}")
+                Log.i("BluetoothGattCallback", "Read characteristic $uuid:\n$strVal")
             }
             BluetoothGatt.GATT_READ_NOT_PERMITTED -> {
                 Log.e("BluetoothGattCallback", "Read not permitted for $uuid!")
@@ -107,7 +109,9 @@ class BlueGattCallbackImp : BluetoothGattCallback() {
         val uuid = characteristic?.uuid
         val value = characteristic?.value
 
-        Log.i("BluetoothGattCallback", "Characteristic $uuid changed | value: ${value.toString()}")
+        val strValue = value?.let { String(it) }
+
+        Log.i("BluetoothGattCallback", "Characteristic $uuid changed | value: $strValue")
     }
 
 
@@ -151,14 +155,29 @@ class BlueGattCallbackImp : BluetoothGattCallback() {
     private fun setupBLEService(gatt: BluetoothGatt, services: MutableList<BluetoothGattService>) {
 
         // 设置serviceUUID
-        val service = gatt.getService(UUID.fromString(SERVICES_UUID))
+        val service = gatt.getService(UUID.fromString(Companion.SERVICES_UUID))
         // 设置写入特征UUID
         writeCharacteristic = service.getCharacteristic(UUID.fromString(WRITE_UUID))
         // 设置监听特征UUID
         notifyCharacteristic = service.getCharacteristic(UUID.fromString(NOTIFY_UUID))
 
+
         // 开启监听
-        gatt.setCharacteristicNotification(notifyCharacteristic,true);
+        gatt.setCharacteristicNotification(notifyCharacteristic,true)
+
+        // 设置消息
+        val descriptor = notifyCharacteristic?.getDescriptor(UUID.fromString(NOTIFY_SERVICE_UUID))
+        descriptor?.value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE;
+        gatt.writeDescriptor(descriptor)
+
+        // debug
         Log.d("BluetoothGattCallback", "Connection to server done");
+    }
+
+    companion object {
+        private const val SERVICES_UUID   = "0000ffe0-0000-1000-8000-00805f9b34fb"    //服务的UUID
+        private const val WRITE_UUID      = "0000ffe2-0000-1000-8000-00805f9b34fb"    //写入特征的UUID
+        private const val NOTIFY_UUID     = "0000ffe1-0000-1000-8000-00805f9b34fb"    //监听特征的UUID
+        private const val NOTIFY_SERVICE_UUID = "00002902-0000-1000-8000-00805f9b34fb" // service
     }
 }
