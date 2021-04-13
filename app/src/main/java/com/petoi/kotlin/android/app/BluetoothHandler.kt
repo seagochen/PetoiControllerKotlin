@@ -87,10 +87,8 @@ open class BluetoothHandler {
         val writeChar = gattCallback.writeCharacteristic
 
         if (writeChar != null) {
-            with(writeChar) {
-                writeChar.setValue(msg)
-                selectedGatt?.writeCharacteristic(writeChar)
-            }
+            writeChar.setValue(msg)
+            selectedGatt?.writeCharacteristic(writeChar)
         }
     }
 }

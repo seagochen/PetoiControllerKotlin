@@ -97,5 +97,6 @@ class MainActivity : BluetoothBasedActivity() {
         // 绑定Android控件和它们应该对应的消息事件
         bindSearchBtnView()
         bindConnectBtnView()
+        bindSendBtnView()
     }
 }

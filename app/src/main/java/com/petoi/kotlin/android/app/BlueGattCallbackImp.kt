@@ -164,6 +164,7 @@ class BlueGattCallbackImp : BluetoothGattCallback() {
 
         // 开启监听
         gatt.setCharacteristicNotification(notifyCharacteristic,true)
+//        gatt.setCharacteristicNotification(writeCharacteristic, true)
 
         // 设置消息
         val descriptor = notifyCharacteristic?.getDescriptor(UUID.fromString(NOTIFY_SERVICE_UUID))
