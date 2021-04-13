@@ -4,49 +4,50 @@ import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import java.util.*
 import kotlin.concurrent.schedule
 
-
+@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 class MainActivity : AppCompatActivity() {
 
     // 从Application获得bluetooth管理器
-    val handler: BluetoothHandler = ApplicationData.bleHandler
+    private val handler: BluetoothHandler = ApplicationData.bleHandler
 
 
     // 确定 ACCESS_FINE_LOCATION 权限是否被赋予了App
     // 它是只读的属性，每次用户请求的时候计算一次
-    val isLocationPermissionGranted
+    private val isLocationPermissionGranted
         get() = hasPermission(Manifest.permission.ACCESS_FINE_LOCATION)
 
 
     // 该函数是用来确定给定的权限是否已经被赋予
-    fun Context.hasPermission(permissionType: String): Boolean {
+    private fun Context.hasPermission(permissionType: String): Boolean {
         return ContextCompat.checkSelfPermission(this, permissionType) ==
                 PackageManager.PERMISSION_GRANTED
     }
 
+    private lateinit var bleDeviceSelected: String
+
     // 蓝牙设备搜索按钮
-    lateinit var searchBtn: Button
+    private lateinit var searchBtn: Button
 
-
-    // 用来绑定Android控件，使得Android控件与事件与代码中的类和方法一一对应
-    fun bindSearchBtnView() {
+    // 绑定搜索按钮功能
+    private fun bindSearchBtnView() {
         // 控件绑定
         searchBtn = findViewById(R.id.searchBtn)
 
         // 事件绑定
-        searchBtn.setOnClickListener { view ->
+        searchBtn.setOnClickListener {
 
             // 首先设置按钮为不可用
             searchBtn.isEnabled = false
@@ -68,7 +69,7 @@ class MainActivity : AppCompatActivity() {
                     if (keys.size > 0) {
 
                         popupMenu(keys.toList()) { value ->
-                            Log.d("Selected", "----> $value")
+                            bleDeviceSelected = keys[value]
                         }
                     }
                 }
@@ -76,13 +77,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-    fun popupMenu(items: List<String>, callback: (Int) -> Unit) {
+    // 弹出菜单
+    private fun popupMenu(items: List<String>, callback: (Int) -> Unit) {
         val builder: AlertDialog.Builder = AlertDialog.Builder(this@MainActivity)
-
-        // list<string> -> charsequence[]
-//        var cs : CharSequence[] =
-        var cs: Array<CharSequence> = items.toTypedArray()
 
         builder.setItems(
             items.toTypedArray()
@@ -97,13 +94,38 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    // 连结BLE设备
+    private lateinit var connectBtn: Button
+
+    // 绑定连结按钮功能
+    private fun bindConnectBtnView() {
+        connectBtn = findViewById(R.id.connectBtn)
+
+        connectBtn.setOnClickListener {
+
+            if (connectBtn.text == "Connect") {
+                handler.connectDeviceByName(this@MainActivity, bleDeviceSelected)
+
+                // update text to "disconnect"
+                connectBtn.text = "Disconnect"
+            } else {
+                handler.disconnectDevice()
+
+                // update text to connect
+                connectBtn.text = "Connect"
+            }
+        }
+    }
+
+
     // Android Activity初始化后的调用函数
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 绑定BLE搜索按钮
+        // 绑定Android控件和它们应该对应的消息事件
         bindSearchBtnView()
+        bindConnectBtnView()
     }
 
 
