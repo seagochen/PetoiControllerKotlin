@@ -42,8 +42,8 @@ open class BluetoothBasedActivity: AppCompatActivity() {
         ) { dialog, index ->
             // 把用户选择的设备编号通过回调函数的形式返回给用户
             callback(index)
-            Log.d("test", "test")
 
+            // 把对话框关闭
             dialog.dismiss()
         }
         builder.show()
@@ -51,7 +51,6 @@ open class BluetoothBasedActivity: AppCompatActivity() {
 
 
     // 在Activity恢复后，蓝牙的连结也要恢复
-
     override fun onResume() {
         super.onResume()
         handler.promptEnableBluetooth(this)
@@ -119,6 +118,13 @@ open class BluetoothBasedActivity: AppCompatActivity() {
     protected fun disconnect() {
         handler.disconnectDevice()
     }
+
+    // 发送数据
+    protected fun send(message: String) {
+        handler.send(message)
+    }
+
+    // TODO: 4/13/21 还需要实现接收数据部分，由GattCallback引出
 
 
     // 向用户发起权限请求

@@ -1,31 +1,30 @@
 package com.petoi.kotlin.android.app
 
 import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothGatt
-import android.bluetooth.le.ScanCallback
-import android.bluetooth.le.ScanResult
+import android.bluetooth.BluetoothGattCharacteristic
 import android.bluetooth.le.ScanSettings
 import android.content.Context
 import android.os.Build
-import android.util.Log
 import androidx.annotation.RequiresApi
 
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
-open class BluetoothHandler: ScanCallback() {
+open class BluetoothHandler {
 
     // ble适配器
     protected val adapter: BluetoothAdapter by lazy {
         BluetoothAdapter.getDefaultAdapter()
     }
 
-    // 外置ble设备列表
-    private val peripherals = HashMap<String, BluetoothDevice>()
-
     // 通用属性协议，定义了BLE通讯的基本规则和操作
     private var selectedGatt: BluetoothGatt? = null
 
+    // bluetooth gattcallback
+    private val gattCallback = BlueGattCallbackImp()
+
+    // bluetooth scancallback
+    private val scanCallback = BluetoothScanCallbackImp()
 
 
     // 开始搜索设备
@@ -36,14 +35,14 @@ open class BluetoothHandler: ScanCallback() {
                 .setScanMode(ScanSettings.SCAN_MODE_LOW_LATENCY)
                 .build()
 
-        peripherals.clear()
-        adapter.bluetoothLeScanner.startScan(null, scanSettings, this)
+        scanCallback.cleanPerals()
+        adapter.bluetoothLeScanner.startScan(null, scanSettings, scanCallback)
     }
 
 
     // 停止搜索设备
     fun stopScanPeripherals() {
-        adapter.bluetoothLeScanner.stopScan(this)
+        adapter.bluetoothLeScanner.stopScan(scanCallback)
     }
 
 
@@ -51,7 +50,7 @@ open class BluetoothHandler: ScanCallback() {
     fun deviceNames(): MutableList<String> {
         val devices = mutableListOf<String>()
 
-        for (item in peripherals) {
+        for (item in scanCallback.peripherals) {
             devices.add(item.key)
         }
         return devices
@@ -60,17 +59,17 @@ open class BluetoothHandler: ScanCallback() {
 
     // 通过设备名连结到给定的设备
     fun connectDeviceByName(context: Context, name: String) {
-        if (! peripherals.containsKey(name)) return // 不存在指定的设备
+        if (! scanCallback.peripherals.containsKey(name)) return // 不存在指定的设备
 
         // 断开设备连结
         disconnectDevice()
 
         // 有指定的设备
-        val device = peripherals[name]
+        val device = scanCallback.peripherals[name]
 
         // 连结至BLE设备
         if (device != null) {
-            selectedGatt = device.connectGatt(context, false, BlueGattCallbackImp())
+            selectedGatt = device.connectGatt(context, false, gattCallback)
         }
     }
 
@@ -84,18 +83,15 @@ open class BluetoothHandler: ScanCallback() {
     }
 
 
-    // BLE设备搜索回调类
-    override fun onScanResult(callbackType: Int, result: ScanResult?) {
-        super.onScanResult(callbackType, result)
+    fun send(msg: String) {
+        val writeChar = gattCallback.writeCharacteristic
 
-        val device = result?.device
-
-        if (device != null && device.name != null && device.address != null) {
-            // for debug
-            Log.d("ScanCallback", "found device: ${device.name} address: ${device.address}")
-
-            // append device to the list
-            peripherals[device.name] = device
+        if (writeChar != null) {
+            with(writeChar) {
+                writeChar.setValue(msg)
+//            writeChar.writeType = BluetoothGattCharacteristic.WRITE_TYPE_DEFAULT
+                selectedGatt?.writeCharacteristic(writeChar)
+            }
         }
     }
 }

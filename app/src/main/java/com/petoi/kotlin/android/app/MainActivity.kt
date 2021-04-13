@@ -76,6 +76,18 @@ class MainActivity : BluetoothBasedActivity() {
         }
     }
 
+    // 发送数据
+    private lateinit var sendBtn: Button
+
+    // 绑定数据发送按钮功能
+    private fun bindSendBtnView() {
+        sendBtn = findViewById(R.id.sendBtn)
+
+        sendBtn.setOnClickListener {
+            send("c")
+        }
+    }
+
 
     // Android Activity初始化后的调用函数
     override fun onCreate(savedInstanceState: Bundle?) {
