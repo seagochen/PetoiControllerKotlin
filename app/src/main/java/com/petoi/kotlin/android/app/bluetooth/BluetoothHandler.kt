@@ -99,9 +99,12 @@ open class BluetoothHandler {
     // 从缓存中抓取数据
     fun recv(): String {
         // 从缓存中读取数据
-        // 由于很多数据都是碎片的，因此需要异步的方式处理全部数据
-        // TODO
+        while (! gattCallback.isReady()) {
+            Thread.sleep(10)
+        }
 
-        return gattCallback.getMessage()
+        // 从缓存中获取数据
+        // TODO 可能会有失败，需要手动调节一个比较合适的等待时间
+        return  gattCallback.getMessage()
     }
 }

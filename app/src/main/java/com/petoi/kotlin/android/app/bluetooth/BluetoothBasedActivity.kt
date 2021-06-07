@@ -7,12 +7,14 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
+import android.util.Log
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.petoi.kotlin.android.app.ApplicationData
+import kotlin.concurrent.thread
 
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -125,11 +127,37 @@ open class BluetoothBasedActivity: AppCompatActivity() {
         handler.send(message)
     }
 
-    //TODO
-    // 4/13/21 还需要实现接收数据部分，由GattCallback引出
+    //
     private lateinit var feedbackTextview: TextView
 
-//    protected fun
+    // 子线程控制运行标识
+    private var isTvUpdateRunning = false
+
+    // 使用线程函数创建线程
+    private val tvUpdateThread: Thread = thread {
+        while(isTvUpdateRunning) {
+            var message = handler.recv()
+
+            Log.i("BluetoothBasedActivity", message)
+
+            //TODO
+        }
+    }
+
+    // 设置用户反馈
+    protected fun setTextView(tv: TextView) {
+
+        // 关闭正在执行的线程，并等待线程退出
+        if (isTvUpdateRunning) {
+            isTvUpdateRunning = false
+            tvUpdateThread.join()
+        }
+
+        // 更新textview，并重新执行子线程更新任务
+        feedbackTextview = tv
+        isTvUpdateRunning = true
+        tvUpdateThread.start()
+    }
 
     // 向用户发起权限请求
     private fun requestLocationPermission() {
@@ -156,4 +184,6 @@ open class BluetoothBasedActivity: AppCompatActivity() {
     private fun Activity.requestPermission(permission: String, requestCode: Int) {
         ActivityCompat.requestPermissions(this, arrayOf(permission), requestCode)
     }
+
+
 }

@@ -3,6 +3,7 @@ package com.petoi.kotlin.android.app
 import android.os.Build
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import com.petoi.kotlin.android.app.bluetooth.BluetoothBasedActivity
 import java.util.*
@@ -89,6 +90,14 @@ class MainActivity : BluetoothBasedActivity() {
         }
     }
 
+    // BLE消息返回显示
+    private lateinit var updateTextview: TextView
+
+    private fun bindUpdateTextview() {
+        updateTextview = findViewById(R.id.textView)
+        setTextView(updateTextview)
+    }
+
 
     // Android Activity初始化后的调用函数
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -99,5 +108,6 @@ class MainActivity : BluetoothBasedActivity() {
         bindSearchBtnView()
         bindConnectBtnView()
         bindSendBtnView()
+        bindUpdateTextview()
     }
 }

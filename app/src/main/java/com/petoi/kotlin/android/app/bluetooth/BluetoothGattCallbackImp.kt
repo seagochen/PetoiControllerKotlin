@@ -11,23 +11,25 @@ import java.util.*
 class BluetoothGattCallbackImp : BluetoothGattCallback() {
 
     // petoi设备返回的字符串信息全部存储到这个列表中
-    private val petoiFeedbacks = mutableListOf<String>()
+    private val petoiMQ = BluetoothMessageQueue()
+
 
     var writeCharacteristic:    BluetoothGattCharacteristic? = null
     var notifyCharacteristic:   BluetoothGattCharacteristic? = null
 
-    // TODO
+    // 获取信息
     fun getMessage() : String {
-        if  (petoiFeedbacks.size > 0) {
-            return petoiFeedbacks.removeAt(0)
-        }
-
-        return ""
+        return petoiMQ.get()
     }
 
     // clean
     fun cleanMessageList() {
-        petoiFeedbacks.clear()
+        petoiMQ.clear()
+    }
+
+    // 数据是否准备完毕
+    fun isReady(): Boolean {
+        return petoiMQ.isReady()
     }
 
     // 伴随特征
@@ -136,8 +138,7 @@ class BluetoothGattCallbackImp : BluetoothGattCallback() {
 
         // 把数据写入列表中
         if (strVal != null) {
-            petoiFeedbacks.add(strVal)
-            Log.i("BluetoothGattCallback", "buffer size: ${petoiFeedbacks.size}")
+            petoiMQ.put(strVal)
         }
 
         // 打印Debug信息
