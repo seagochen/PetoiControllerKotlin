@@ -99,8 +99,8 @@ open class BluetoothHandler {
     // 从缓存中抓取数据
     fun recv(): String {
         // 从缓存中读取数据
-        while (! gattCallback.isReady()) {
-            Thread.sleep(10)
+        if (!gattCallback.isReady()) {
+            return ""
         }
 
         // 从缓存中获取数据

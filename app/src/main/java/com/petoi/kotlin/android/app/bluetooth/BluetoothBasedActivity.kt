@@ -125,6 +125,7 @@ open class BluetoothBasedActivity: AppCompatActivity() {
     // 发送数据
     protected fun send(message: String) {
         handler.send(message)
+        feedback = ""
     }
 
     //
@@ -132,15 +133,22 @@ open class BluetoothBasedActivity: AppCompatActivity() {
 
     // 子线程控制运行标识
     private var isTvUpdateRunning = false
+    private var feedback: String = ""
 
     // 使用线程函数创建线程
     private val tvUpdateThread: Thread = thread {
         while(isTvUpdateRunning) {
-            var message = handler.recv()
 
-            Log.i("BluetoothBasedActivity", message)
+            // 尝试更新内容
+            feedback += handler.recv()
+            runOnUiThread {
+                if (feedbackTextview != null && feedback != "") {
+                    feedbackTextview.setText(feedback)
+                }
+            }
 
-            //TODO
+            // 休息
+            Thread.sleep(10)
         }
     }
 
