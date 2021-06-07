@@ -1,4 +1,4 @@
-package com.petoi.kotlin.android.app
+package com.petoi.kotlin.android.app.bluetooth
 
 import android.Manifest
 import android.app.Activity
@@ -7,11 +7,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
-import android.util.Log
+import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.petoi.kotlin.android.app.ApplicationData
 
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -124,8 +125,11 @@ open class BluetoothBasedActivity: AppCompatActivity() {
         handler.send(message)
     }
 
-    // TODO: 4/13/21 还需要实现接收数据部分，由GattCallback引出
+    //TODO
+    // 4/13/21 还需要实现接收数据部分，由GattCallback引出
+    private lateinit var feedbackTextview: TextView
 
+//    protected fun
 
     // 向用户发起权限请求
     private fun requestLocationPermission() {

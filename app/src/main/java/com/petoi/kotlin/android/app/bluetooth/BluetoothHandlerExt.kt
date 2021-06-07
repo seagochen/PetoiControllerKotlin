@@ -1,4 +1,4 @@
-package com.petoi.kotlin.android.app
+package com.petoi.kotlin.android.app.bluetooth
 
 import android.bluetooth.BluetoothAdapter
 import android.content.Intent

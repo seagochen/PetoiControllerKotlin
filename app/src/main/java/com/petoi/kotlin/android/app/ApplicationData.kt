@@ -3,6 +3,7 @@ package com.petoi.kotlin.android.app
 import android.app.Application
 import android.os.Build
 import androidx.annotation.RequiresApi
+import com.petoi.kotlin.android.app.bluetooth.BluetoothHandlerExt
 
 class ApplicationData : Application() {
 

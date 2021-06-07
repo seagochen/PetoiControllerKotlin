@@ -4,6 +4,7 @@ import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import androidx.annotation.RequiresApi
+import com.petoi.kotlin.android.app.bluetooth.BluetoothBasedActivity
 import java.util.*
 import kotlin.concurrent.schedule
 

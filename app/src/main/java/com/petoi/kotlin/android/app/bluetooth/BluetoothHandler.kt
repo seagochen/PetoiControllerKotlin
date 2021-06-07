@@ -1,8 +1,7 @@
-package com.petoi.kotlin.android.app
+package com.petoi.kotlin.android.app.bluetooth
 
 import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothGatt
-import android.bluetooth.BluetoothGattCharacteristic
 import android.bluetooth.le.ScanSettings
 import android.content.Context
 import android.os.Build
@@ -21,7 +20,7 @@ open class BluetoothHandler {
     private var selectedGatt: BluetoothGatt? = null
 
     // bluetooth gattcallback
-    private val gattCallback = BlueGattCallbackImp()
+    private val gattCallback = BluetoothGattCallbackImp()
 
     // bluetooth scancallback
     private val scanCallback = BluetoothScanCallbackImp()
@@ -82,13 +81,27 @@ open class BluetoothHandler {
         }
     }
 
-
+    // 向BLE设备发送数据
     fun send(msg: String) {
+        // 首先清楚缓存数据，避免数据读取出现异常
+        gattCallback.cleanMessageList()
+
+        // 获取蓝牙数据写入信道
         val writeChar = gattCallback.writeCharacteristic
 
+        // 发送数据
         if (writeChar != null) {
             writeChar.setValue(msg)
             selectedGatt?.writeCharacteristic(writeChar)
         }
+    }
+
+    // 从缓存中抓取数据
+    fun recv(): String {
+        // 从缓存中读取数据
+        // 由于很多数据都是碎片的，因此需要异步的方式处理全部数据
+        // TODO
+
+        return gattCallback.getMessage()
     }
 }

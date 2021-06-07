@@ -1,4 +1,4 @@
-package com.petoi.kotlin.android.app
+package com.petoi.kotlin.android.app.bluetooth
 
 import android.bluetooth.*
 import android.os.Build
@@ -8,12 +8,35 @@ import java.util.*
 
 
 @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
-class BlueGattCallbackImp : BluetoothGattCallback() {
+class BluetoothGattCallbackImp : BluetoothGattCallback() {
 
-
+    // petoi设备返回的字符串信息全部存储到这个列表中
+    private val petoiFeedbacks = mutableListOf<String>()
 
     var writeCharacteristic:    BluetoothGattCharacteristic? = null
     var notifyCharacteristic:   BluetoothGattCharacteristic? = null
+
+    // TODO
+    fun getMessage() : String {
+        if  (petoiFeedbacks.size > 0) {
+            return petoiFeedbacks.removeAt(0)
+        }
+
+        return ""
+    }
+
+    // clean
+    fun cleanMessageList() {
+        petoiFeedbacks.clear()
+    }
+
+    // 伴随特征
+    companion object {
+        private const val SERVICES_UUID   = "0000ffe0-0000-1000-8000-00805f9b34fb"    //服务的UUID
+        private const val WRITE_UUID      = "0000ffe2-0000-1000-8000-00805f9b34fb"    //写入特征的UUID
+        private const val NOTIFY_UUID     = "0000ffe1-0000-1000-8000-00805f9b34fb"    //监听特征的UUID
+        private const val NOTIFY_SERVICE_UUID = "00002902-0000-1000-8000-00805f9b34fb" // service
+    }
 
 
     // 与BLE设备连结后，设备连结状态发生改变时
@@ -109,9 +132,16 @@ class BlueGattCallbackImp : BluetoothGattCallback() {
         val uuid = characteristic?.uuid
         val value = characteristic?.value
 
-        val strValue = value?.let { String(it) }
+        val strVal = value?.let { String(it) }
 
-        Log.i("BluetoothGattCallback", "Characteristic $uuid changed | value: $strValue")
+        // 把数据写入列表中
+        if (strVal != null) {
+            petoiFeedbacks.add(strVal)
+            Log.i("BluetoothGattCallback", "buffer size: ${petoiFeedbacks.size}")
+        }
+
+        // 打印Debug信息
+        Log.i("BluetoothGattCallback", "Characteristic $uuid changed | value: $strVal")
     }
 
 
@@ -155,7 +185,7 @@ class BlueGattCallbackImp : BluetoothGattCallback() {
     private fun setupBLEService(gatt: BluetoothGatt, services: MutableList<BluetoothGattService>) {
 
         // 设置serviceUUID
-        val service = gatt.getService(UUID.fromString(Companion.SERVICES_UUID))
+        val service = gatt.getService(UUID.fromString(SERVICES_UUID))
         // 设置写入特征UUID
         writeCharacteristic = service.getCharacteristic(UUID.fromString(WRITE_UUID))
         // 设置监听特征UUID
@@ -173,12 +203,5 @@ class BlueGattCallbackImp : BluetoothGattCallback() {
 
         // debug
         Log.d("BluetoothGattCallback", "Connection to server done");
-    }
-
-    companion object {
-        private const val SERVICES_UUID   = "0000ffe0-0000-1000-8000-00805f9b34fb"    //服务的UUID
-        private const val WRITE_UUID      = "0000ffe2-0000-1000-8000-00805f9b34fb"    //写入特征的UUID
-        private const val NOTIFY_UUID     = "0000ffe1-0000-1000-8000-00805f9b34fb"    //监听特征的UUID
-        private const val NOTIFY_SERVICE_UUID = "00002902-0000-1000-8000-00805f9b34fb" // service
     }
 }
