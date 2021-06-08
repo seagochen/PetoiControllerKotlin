@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
-import android.util.Log
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -123,16 +122,20 @@ open class BluetoothBasedActivity: AppCompatActivity() {
     }
 
     // 发送数据
-    protected fun send(message: String) {
-        handler.send(message)
+    protected fun send(msg: String) {
+        handler.send(msg)
         feedback = ""
+
+        //TODO 增加一个对C指令的检测，具体实现方法看QT版本
     }
 
-    //
-    private lateinit var feedbackTextview: TextView
+    // 用于更新输出的内容
+    private var feedbackTextview: TextView? = null
 
-    // 子线程控制运行标识
+    // 用于控制子线程的标识符
     private var isTvUpdateRunning = false
+
+    // 用于输出的缓冲字符串
     private var feedback: String = ""
 
     // 使用线程函数创建线程
@@ -143,9 +146,11 @@ open class BluetoothBasedActivity: AppCompatActivity() {
             feedback += handler.recv()
             runOnUiThread {
                 if (feedbackTextview != null && feedback != "") {
-                    feedbackTextview.setText(feedback)
+                    feedbackTextview!!.setText(feedback)
                 }
             }
+
+            //TODO 需要实现一个对C命令的反馈，具体实现方法参考Qt代码
 
             // 休息
             Thread.sleep(10)
