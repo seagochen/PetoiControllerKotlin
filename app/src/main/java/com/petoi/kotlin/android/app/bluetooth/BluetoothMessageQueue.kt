@@ -8,7 +8,7 @@ open class BluetoothMessageQueue {
     private var lastTime = System.currentTimeMillis()
 
     // 超时设置
-    private val timeout = 200;
+    private val timeout = 200
 
     // 包含线程锁的数据获取
     @Synchronized

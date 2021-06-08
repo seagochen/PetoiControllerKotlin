@@ -15,7 +15,7 @@ class BluetoothGattCallbackImp : BluetoothGattCallback() {
 
 
     var writeCharacteristic:    BluetoothGattCharacteristic? = null
-    var notifyCharacteristic:   BluetoothGattCharacteristic? = null
+    private var notifyCharacteristic:   BluetoothGattCharacteristic? = null
 
     // 获取信息
     fun getMessage() : String {
@@ -159,7 +159,7 @@ class BluetoothGattCallbackImp : BluetoothGattCallback() {
             printGattTable(services) // See implementation just above this section
 
             // 注册ble服务
-            setupBLEService(gatt, services)
+            setupBLEService(gatt)
         }
     }
 
@@ -183,7 +183,7 @@ class BluetoothGattCallbackImp : BluetoothGattCallback() {
 
 
     // 设置BLE收发服务及特征
-    private fun setupBLEService(gatt: BluetoothGatt, services: MutableList<BluetoothGattService>) {
+    private fun setupBLEService(gatt: BluetoothGatt) {
 
         // 设置serviceUUID
         val service = gatt.getService(UUID.fromString(SERVICES_UUID))
@@ -199,10 +199,10 @@ class BluetoothGattCallbackImp : BluetoothGattCallback() {
 
         // 设置消息
         val descriptor = notifyCharacteristic?.getDescriptor(UUID.fromString(NOTIFY_SERVICE_UUID))
-        descriptor?.value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE;
+        descriptor?.value = BluetoothGattDescriptor.ENABLE_NOTIFICATION_VALUE
         gatt.writeDescriptor(descriptor)
 
         // debug
-        Log.d("BluetoothGattCallback", "Connection to server done");
+        Log.d("BluetoothGattCallback", "Connection to server done")
     }
 }

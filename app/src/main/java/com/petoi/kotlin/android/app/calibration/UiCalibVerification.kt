@@ -7,19 +7,19 @@ open class UiCalibVerification {
 
     init {
         // head
-        servos.add(Pair<String, Int>("0", 0));
+        servos.add(Pair("0", 0))
 
         // upper arm and leg
-        servos.add(Pair<String, Int>("8", 0));
-        servos.add(Pair<String, Int>("9", 0));
-        servos.add(Pair<String, Int>("10", 0));
-        servos.add(Pair<String, Int>("11", 0));
+        servos.add(Pair("8", 0))
+        servos.add(Pair("9", 0))
+        servos.add(Pair("10", 0))
+        servos.add(Pair("11", 0))
 
         // lower arm and leg
-        servos.add(Pair<String, Int>("12", 0));
-        servos.add(Pair<String, Int>("13", 0));
-        servos.add(Pair<String, Int>("14", 0));
-        servos.add(Pair<String, Int>("15", 0));
+        servos.add(Pair("12", 0))
+        servos.add(Pair("13", 0))
+        servos.add(Pair("14", 0))
+        servos.add(Pair("15", 0))
     }
 
     fun count(): Int { return servos.size }
@@ -28,44 +28,40 @@ open class UiCalibVerification {
 
     fun name(pos: Int): String { return servos[pos].first }
 
-    fun increaseCalibAngle(pos: Int): Boolean {
-        var current_angle = servos[pos].second
+    fun increaseCalibAngle(pos: Int): Pair<Boolean, String> {
+        var currentAngle = servos[pos].second
         val name = servos[pos].first
 
         // increase one degree
-        current_angle += 1
-        if (current_angle > 9) {
-            return false;
+        currentAngle += 1
+        if (currentAngle > 9) {
+            return Pair(false, "")
         }
 
-        // send updated-angle
-//        QString updated = QString("c%1 %2").arg(name).arg(current_angle);
-//        MainWindow::uiSerialHandler.sendCmdViaSerialPort(updated);
-        //TODO 将修改好的值发送给设备
-
         // update record
-        servos[pos] = servos[pos].copy(second = current_angle)
-        return true
+        servos[pos] = servos[pos].copy(second = currentAngle)
+
+        // 调整指令
+        val cmd = "c$name $currentAngle"
+        return Pair(true, cmd)
     }
 
-    fun decreaseCalibAngle(pos: Int): Boolean {
-        var current_angle = servos[pos].second
+    fun decreaseCalibAngle(pos: Int): Pair<Boolean, String> {
+        var currentAngle = servos[pos].second
         val name = servos[pos].first
 
         // increase one degree
-        current_angle -= 1
-        if (current_angle < -9) {
-            return false;
+        currentAngle -= 1
+        if (currentAngle < -9) {
+            return Pair(false, "")
         }
 
-        // send updated-angle
-//        QString updated = QString("c%1 %2").arg(name).arg(current_angle);
-//        MainWindow::uiSerialHandler.sendCmdViaSerialPort(updated);
-        //TODO 将修改好的值发送给设备
-
         // update record
-        servos[pos] = servos[pos].copy(second = current_angle)
-        return true
+        servos[pos] = servos[pos].copy(second = currentAngle)
+
+        // 调整指令
+        val cmd = "c$name $currentAngle"
+        return Pair(true, cmd)
     }
 
     fun updateCalibrationInfo(feedback: String): Boolean {
@@ -80,10 +76,10 @@ open class UiCalibVerification {
         if (fb != "") { // found valid data
 
             // split the string into lists
-            val servos_list = fb.split(",");
+            val servosList = fb.split(",");
 
             // check digital strings length
-            if (servos_list.count() < 16) {
+            if (servosList.count() < 16) {
                 Log.i("UiCalibVerification", "Error calibration list: $fb")
                 return false;
             }
@@ -91,25 +87,25 @@ open class UiCalibVerification {
             // input value check
             for (i in 0 until 16) {
 
-                Log.i("UiCalibVerification", "check value: $servos_list[i]")
-                if (!calib.isValidAngleDegree(servos_list[i])) {
+                Log.i("UiCalibVerification", "check value: $servosList[i]")
+                if (!calib.isValidAngleDegree(servosList[i])) {
                     Log.i("UiCalibVerification", "failed")
-                    return false;
+                    return false
                 }
             }
 
             //TODO 赋值，以后如果有需要可能会扩展舵机数
-            servos[0] = servos[0].copy(second = servos_list[0].toInt())
+            servos[0] = servos[0].copy(second = servosList[0].toInt())
 
-            servos[1] = servos[1].copy(second = servos_list[1].toInt())
-            servos[2] = servos[2].copy(second = servos_list[2].toInt())
-            servos[3] = servos[3].copy(second = servos_list[3].toInt())
-            servos[4] = servos[4].copy(second = servos_list[4].toInt())
+            servos[1] = servos[1].copy(second = servosList[1].toInt())
+            servos[2] = servos[2].copy(second = servosList[2].toInt())
+            servos[3] = servos[3].copy(second = servosList[3].toInt())
+            servos[4] = servos[4].copy(second = servosList[4].toInt())
 
-            servos[5] = servos[5].copy(second = servos_list[12].toInt())
-            servos[6] = servos[6].copy(second = servos_list[13].toInt())
-            servos[7] = servos[7].copy(second = servos_list[14].toInt())
-            servos[8] = servos[8].copy(second = servos_list[15].toInt())
+            servos[5] = servos[5].copy(second = servosList[12].toInt())
+            servos[6] = servos[6].copy(second = servosList[13].toInt())
+            servos[7] = servos[7].copy(second = servosList[14].toInt())
+            servos[8] = servos[8].copy(second = servosList[15].toInt())
 
             return true
         }
@@ -117,15 +113,14 @@ open class UiCalibVerification {
         return false
     }
 
-    fun clearCalibAngle(pos: Int) {
-        val name = servos[pos].first;
-
-        // send updated-angle
-//        QString updated = QString("c%1 %2").arg(name).arg(0);
-//        MainWindow::uiSerialHandler.sendCmdViaSerialPort(updated);
-        //TODO 将修改好的值发送给设备
+    fun clearCalibAngle(pos: Int): Pair<Boolean, String> {
+        val name = servos[pos].first
 
         // update record
         servos[pos] = servos[pos].copy(second = 0)
+
+        // 调整指令
+        val cmd = "c$name 0"
+        return Pair<Boolean, String>(true, cmd)
     }
 }
