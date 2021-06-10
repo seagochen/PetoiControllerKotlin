@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.petoi.kotlin.android.app">
+    <!-- Allows the app to connect to Bluetooth devices. -->
+    <uses-permission android:name="android.permission.BLUETOOTH" /> <!-- Allows the app to scan for and bond with Bluetooth devices. -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <!--
+ As of Android M (6.0) and above, location permission is required for the
+    app to get BLE scan results.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- Declare that app uses BLE features on Android devices. -->
+    <uses-feature
+        android:name="android.hardware.bluetooth_le"
+        android:required="true" />
 
     <application
         android:name=".ApplicationData"
@@ -10,29 +21,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PetoiSerialKotlin">
-
-        <activity android:name=".MainActivity">
+        <activity android:name=".UserDefineMotionActivity"/>
+        <activity android:name=".MotionsControlActivity" />
+        <activity android:name=".CalibrationActivity" />
+        <activity android:name=".DeviceConnectActivity" />
+        <activity android:name=".MainActivity" android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
     </application>
-
-    <!--Allows the app to connect to Bluetooth devices. -->
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-
-    <!-- Allows the app to scan for and bond with Bluetooth devices. -->
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-
-    <!-- As of Android M (6.0) and above, location permission is required for the
-    app to get BLE scan results. -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-
-    <!-- Declare that app uses BLE features on Android devices. -->
-    <uses-feature
-        android:name="android.hardware.bluetooth_le"
-        android:required="true" />
 
 </manifest>
