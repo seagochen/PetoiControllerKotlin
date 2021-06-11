@@ -4,7 +4,6 @@ import android.os.Build
 import android.os.Bundle
 import androidx.annotation.RequiresApi
 import com.petoi.kotlin.android.app.bluetooth.BluetoothBasedActivity
-import java.util.*
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 class MainActivity : BluetoothBasedActivity() {
@@ -99,7 +98,9 @@ class MainActivity : BluetoothBasedActivity() {
     // Android Activity初始化后的调用函数
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        supportActionBar?.hide()
         setContentView(R.layout.activity_main)
+
 
         // 绑定Android控件和它们应该对应的消息事件
 //        bindSearchBtnView()

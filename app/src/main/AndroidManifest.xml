@@ -25,7 +25,11 @@
         <activity android:name=".MotionsControlActivity" />
         <activity android:name=".CalibrationActivity" />
         <activity android:name=".DeviceConnectActivity" />
-        <activity android:name=".MainActivity" android:screenOrientation="landscape">
+        
+        <!-- MainActivity -->
+        <activity  
+            android:name=".MainActivity" 
+            android:screenOrientation="landscape">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

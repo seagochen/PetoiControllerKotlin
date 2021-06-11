@@ -4,5 +4,118 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!-- 菜单键 -->
+        <Button
+            android:id="@+id/btn_main_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="10dp"
+            android:text="Menu" />
+
+        <!-- 速度和方向键布局 -->
+        <RelativeLayout
+            android:id="@+id/layout_main_arrows_velocities"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp">
+
+            <!-- 速度键组 -->
+            <LinearLayout
+                android:id="@+id/layout_main_velocities"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginStart="40dp"
+                android:orientation="vertical">
+
+                <Button
+                    android:id="@+id/btn_main_high_velocity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="H"/>
+                <Button
+                    android:id="@+id/btn_main_medium_velocity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="M"/>
+                <Button
+                    android:id="@+id/btn_main_low_velocity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="L"/>
+            </LinearLayout>
+
+            <!-- 方向键组 -->
+            <RelativeLayout
+                android:id="@+id/layout_main_arrows"
+                android:layout_width="230dp"
+                android:layout_height="230dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentStart="true">
+
+                <ImageButton
+                    android:id="@+id/btn_main_up"
+                    android:background="#00000000"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerInParent="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/up" />
+
+                <ImageButton
+                    android:id="@+id/btn_main_down"
+                    android:background="#00000000"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerInParent="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/down" />
+
+                <ImageButton
+                    android:id="@+id/btn_main_left"
+                    android:background="#00000000"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerInParent="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/left" />
+
+                <ImageButton
+                    android:id="@+id/btn_main_right"
+                    android:background="#00000000"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerInParent="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/right" />
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+        
+        <!-- 自定义动作列表框 -->
+        <ListView
+            android:id="@+id/list_main_motions"
+            android:layout_width="500dp"
+            android:layout_height="300dp"
+            android:layout_marginBottom="15dp"
+            android:layout_toEndOf="@id/layout_main_arrows_velocities"
+            android:layout_marginStart="60dp"
+            android:layout_alignParentBottom="true">
+
+        </ListView>
+
+    </RelativeLayout>
+
   
 </androidx.constraintlayout.widget.ConstraintLayout>
