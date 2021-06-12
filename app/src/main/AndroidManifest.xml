@@ -20,7 +20,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.PetoiSerialKotlin">
+        android:theme="@style/Theme.PetoiControllerKotlin">
         <activity android:name=".UserDefineMotionActivity"/>
         <activity android:name=".MotionsControlActivity" />
         <activity android:name=".CalibrationActivity" />

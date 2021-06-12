@@ -1,3 +1,17 @@
 <resources>
-    <string name="app_name">PetoiSerialKotlin</string>
+    <!-- Application -->
+    <string name="app_name">PetoiControllerKotlin</string>
+
+    <!-- MainActivity -->
+    <string name="menu_main_calib">Calibration</string>
+    <string name="menu_main_help">Help</string>
+
+    <string name="ibt_main_up">Up</string>
+    <string name="ibt_main_down">Down</string>
+    <string name="ibt_main_left">Left</string>
+    <string name="ibt_main_right">Right</string>
+
+    <string name="ibt_main_high">HighVelocity</string>
+    <string name="ibt_main_medium">MediumVelocity</string>
+    <string name="ibt_main_low">LowVelocity</string>
 </resources>

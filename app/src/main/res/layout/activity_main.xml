@@ -61,6 +61,7 @@
 
                 <ImageButton
                     android:id="@+id/btn_main_up"
+                    android:contentDescription="@string/ibt_main_up"
                     android:background="#00000000"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
@@ -71,6 +72,7 @@
 
                 <ImageButton
                     android:id="@+id/btn_main_down"
+                    android:contentDescription="@string/ibt_main_down"
                     android:background="#00000000"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
@@ -81,6 +83,7 @@
 
                 <ImageButton
                     android:id="@+id/btn_main_left"
+                    android:contentDescription="@string/ibt_main_left"
                     android:background="#00000000"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
@@ -91,13 +94,14 @@
 
                 <ImageButton
                     android:id="@+id/btn_main_right"
+                    android:contentDescription="@string/ibt_main_right"
                     android:background="#00000000"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_alignParentEnd="true"
                     android:layout_centerInParent="true"
                     android:scaleType="fitXY"
-                    android:src="@drawable/right" />
+                    android:src="@drawable/right"/>
 
             </RelativeLayout>
 
@@ -111,7 +115,8 @@
             android:layout_marginBottom="15dp"
             android:layout_toEndOf="@id/layout_main_arrows_velocities"
             android:layout_marginStart="60dp"
-            android:layout_alignParentBottom="true">
+            android:layout_alignParentBottom="true"
+            android:background="#11111111">
 
         </ListView>
 

@@ -1,2 +1,2 @@
 include ':app'
-rootProject.name = "PetoiSerialKotlin"
+rootProject.name = "PetoiControllerKotlin"
