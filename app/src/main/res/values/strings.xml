@@ -14,4 +14,12 @@
     <string name="ibt_main_high">HighVelocity</string>
     <string name="ibt_main_medium">MediumVelocity</string>
     <string name="ibt_main_low">LowVelocity</string>
+
+    <!-- CalibrationActivity -->
+    <string name="img_illustration">PetoiBittle</string>
+    <string name="ibt_increase">IncreaseAngle</string>
+    <string name="ibt_decrease">DecreaseAngle</string>
+
+    <string name="btn_save">Save</string>
+    <string name="label_servo">Servo</string>
 </resources>
