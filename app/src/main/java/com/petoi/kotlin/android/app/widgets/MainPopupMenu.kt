@@ -8,7 +8,7 @@ import android.widget.PopupMenu
 import com.petoi.kotlin.android.app.R
 
 
-open class MainDropMenu : PopupMenu.OnMenuItemClickListener {
+open class MainPopupMenu : PopupMenu.OnMenuItemClickListener {
 
     fun showMenu(context: Context, v: View) {
         val popup = PopupMenu(context, v)

@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.annotation.RequiresApi
 import com.petoi.kotlin.android.app.bluetooth.BluetoothBasedActivity
-import com.petoi.kotlin.android.app.widgets.MainDropMenu
+import com.petoi.kotlin.android.app.widgets.MainPopupMenu
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 class MainActivity : BluetoothBasedActivity() {
@@ -105,7 +105,7 @@ class MainActivity : BluetoothBasedActivity() {
 
 //        Button btn = (Button) findViewById(R.id.btnShow)
         val btn = findViewById<Button>(R.id.btn_main_menu)
-        val menu = MainDropMenu()
+        val menu = MainPopupMenu()
         btn.setOnClickListener {
             menu.showMenu(this, it)
         }

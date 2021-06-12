@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/servo0" android:title="@string/servo0" />
+
+    <item android:id="@+id/servo8" android:title="@string/servo8" />
+    <item android:id="@+id/servo9" android:title="@string/servo9" />
+    <item android:id="@+id/servo10" android:title="@string/servo10" />
+    <item android:id="@+id/servo11" android:title="@string/servo11" />
+
+    <item android:id="@+id/servo12" android:title="@string/servo12" />
+    <item android:id="@+id/servo13" android:title="@string/servo13" />
+    <item android:id="@+id/servo14" android:title="@string/servo14" />
+    <item android:id="@+id/servo15" android:title="@string/servo15" />   
+
+</menu>

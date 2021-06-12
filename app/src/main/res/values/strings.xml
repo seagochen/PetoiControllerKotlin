@@ -22,4 +22,16 @@
 
     <string name="btn_save">Save</string>
     <string name="label_servo">Servo</string>
+
+    <string name="servo0">Servo 0</string>
+
+    <string name="servo8">Servo 8</string>
+    <string name="servo9">Servo 9</string>
+    <string name="servo10">Servo 10</string>
+    <string name="servo11">Servo 11</string>
+    
+    <string name="servo12">Servo 12</string>
+    <string name="servo13">Servo 13</string>
+    <string name="servo14">Servo 14</string>
+    <string name="servo15">Servo 15</string>
 </resources>
