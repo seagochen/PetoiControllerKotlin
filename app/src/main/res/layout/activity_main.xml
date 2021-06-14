@@ -116,7 +116,7 @@
             android:layout_toEndOf="@id/layout_main_arrows_velocities"
             android:layout_marginStart="60dp"
             android:layout_alignParentBottom="true"
-            android:background="#11111111">
+            android:background="@color/yolk_yellow">
 
         </ListView>
 

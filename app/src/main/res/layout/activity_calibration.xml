@@ -10,12 +10,21 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <!-- Activity default -->
+        <Button 
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:text="@string/btn_back"/>
+
+
         <!-- 示例图片 -->
         <ImageView
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="240dp"
             android:layout_weight="3"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="30dp"
             android:src="@drawable/illustration"
             android:contentDescription="@string/img_illustration" />
 
@@ -46,24 +55,16 @@
                 <ImageButton
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:layout_marginStart="30dp"
+                    android:layout_marginStart="20dp"
                     android:src="@drawable/negative"
                     android:scaleType="fitXY"
                     android:background="#00000000"
                     android:contentDescription="@string/ibt_increase"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="30dp"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    android:gravity="center"
-                    android:text="@string/label_servo"/>
-
                 <Spinner
-                    android:layout_marginStart="10dp"
-                    android:layout_width="160dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_width="230dp"
                     android:layout_height="40dp"/>
 
             </LinearLayout>
