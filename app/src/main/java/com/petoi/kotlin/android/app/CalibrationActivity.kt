@@ -6,7 +6,7 @@ import android.os.Bundle
 class CalibrationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_calibration)
+        setContentView(R.layout.activity_calibration)
         //TODO
     }
 }

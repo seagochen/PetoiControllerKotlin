@@ -20,6 +20,8 @@
     <string name="ibt_main_medium">MediumVelocity</string>
     <string name="ibt_main_low">LowVelocity</string>
 
+    <string name="ibt_add">AddMotion</string>
+
     <!-- CalibrationActivity -->
     <string name="img_illustration">PetoiBittle</string>
     <string name="ibt_increase">IncreaseAngle</string>
