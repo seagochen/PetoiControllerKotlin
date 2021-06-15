@@ -129,6 +129,13 @@ open class BluetoothBasedActivity: AppCompatActivity() {
         //TODO 增加一个对C指令的检测，具体实现方法看QT版本
     }
 
+    // 检测是否与BLE设备建立了连接
+    protected  fun isConnected(): Boolean {
+//        handler.
+        // TODO
+        return true
+    }
+
     // 用于更新输出的内容
     private var feedbackTextview: TextView? = null
 
@@ -197,6 +204,4 @@ open class BluetoothBasedActivity: AppCompatActivity() {
     private fun Activity.requestPermission(permission: String, requestCode: Int) {
         ActivityCompat.requestPermissions(this, arrayOf(permission), requestCode)
     }
-
-
 }

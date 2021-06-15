@@ -78,6 +78,7 @@ open class BluetoothHandler {
         if (selectedGatt != null) {
             selectedGatt?.disconnect()
             selectedGatt?.close()
+            selectedGatt = null
         }
     }
 
@@ -106,5 +107,10 @@ open class BluetoothHandler {
         // 从缓存中获取数据
         // TODO 可能会有失败，需要手动调节一个比较合适的等待时间
         return  gattCallback.getMessage()
+    }
+
+    // 表示是否已经和设备建立了连接
+    fun isConnected(): Boolean {
+        return selectedGatt != null
     }
 }
