@@ -42,4 +42,8 @@
     <!-- MotionActivity -->
     <string name="lb_name">Name</string>
     <string name="lb_action">Action</string>
+
+    <!-- DeviceControlActivity -->
+    <string name="lb_refresh">Refresh</string>
+    <string name="lb_connect">Connect</string>
 </resources>
