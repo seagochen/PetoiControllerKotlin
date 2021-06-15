@@ -1,5 +1,6 @@
 package com.petoi.kotlin.android.app
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -29,7 +30,8 @@ class MainActivity : BluetoothBasedActivity() {
     }
 
     // 绑定方向键
-    private fun bindArrows() {
+    @SuppressLint("ClickableViewAccessibility")
+    private fun bindMotionDir() {
         val up = findViewById<ImageButton>(R.id.btn_main_up)
         val down = findViewById<ImageButton>(R.id.btn_main_down)
         val left = findViewById<ImageButton>(R.id.btn_main_left)
@@ -48,7 +50,6 @@ class MainActivity : BluetoothBasedActivity() {
             }
             return@setOnTouchListener true
         }
-
 
         down.setOnTouchListener { v, event ->
             when (event.getAction()) {
@@ -90,7 +91,24 @@ class MainActivity : BluetoothBasedActivity() {
         }
     }
 
+    // 绑定运动状态
+    private fun bindKineState() {
+        val crawl = findViewById<Button>(R.id.btn_main_high_velocity)
+        val run = findViewById<Button>(R.id.btn_main_medium_velocity)
+        val normal = findViewById<Button>(R.id.btn_main_low_velocity)
 
+        crawl.setOnClickListener {
+
+        }
+
+        run.setOnClickListener {
+
+        }
+
+        normal.setOnClickListener {
+
+        }
+    }
 
     // Android Activity初始化后的调用函数
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -100,6 +118,7 @@ class MainActivity : BluetoothBasedActivity() {
 
         // 绑定Android控件和它们应该对应的消息事件
         bindPopupMenu()
-        bindArrows()
+        bindMotionDir()
+        bindKineState()
     }
 }

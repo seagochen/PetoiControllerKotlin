@@ -108,17 +108,36 @@
         </RelativeLayout>
         
         <!-- 自定义动作列表框 -->
-        <ListView
-            android:id="@+id/list_main_motions"
-            android:layout_width="500dp"
-            android:layout_height="300dp"
-            android:layout_marginBottom="15dp"
-            android:layout_toEndOf="@id/layout_main_arrows_velocities"
-            android:layout_marginStart="60dp"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="@color/yolk_yellow">
+            android:layout_toEndOf="@id/layout_main_arrows_velocities"
+            android:layout_marginBottom="15dp"
+            android:layout_marginStart="60dp"
+            android:orientation="vertical" >
 
-        </ListView>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+
+            <ListView
+                android:id="@+id/list_main_motions"
+                android:layout_width="500dp"
+                android:layout_height="300dp"
+                android:background="@color/yolk_yellow">
+            </ListView>
+        </LinearLayout>
+
+
 
     </RelativeLayout>
 
