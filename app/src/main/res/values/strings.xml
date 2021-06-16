@@ -9,7 +9,7 @@
     
     <!-- MainActivity -->
     <string name="menu_main_calib">Calibration</string>
-    <string name="menu_main_help">Help</string>
+    <string name="menu_main_connector">Connect</string>
 
     <string name="ibt_main_up">Up</string>
     <string name="ibt_main_down">Down</string>

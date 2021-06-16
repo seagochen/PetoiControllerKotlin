@@ -12,6 +12,7 @@
 
         <!-- Activity default -->
         <Button 
+            android:id="@+id/btn_calib_back"
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -36,7 +37,6 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:id="@+id/layout_calib_add_min"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -45,6 +45,7 @@
                 android:orientation="horizontal">
 
                 <ImageButton
+                    android:id="@+id/btn_calib_add"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:src="@drawable/positive"
@@ -53,6 +54,7 @@
                     android:contentDescription="@string/ibt_increase" />
 
                 <ImageButton
+                    android:id="@+id/btn_calib_minus"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginStart="20dp"
@@ -62,6 +64,7 @@
                     android:contentDescription="@string/ibt_increase"/>
 
                 <Spinner
+                    android:id="@+id/spn_calib_servos"
                     android:layout_marginStart="20dp"
                     android:layout_marginEnd="30dp"
                     android:layout_width="230dp"
@@ -70,6 +73,7 @@
             </LinearLayout>
 
             <Button
+                android:id="@+id/btn_calib_save"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
