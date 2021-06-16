@@ -131,9 +131,7 @@ open class BluetoothBasedActivity: AppCompatActivity() {
 
     // 检测是否与BLE设备建立了连接
     protected  fun isConnected(): Boolean {
-//        handler.
-        // TODO
-        return true
+        return handler.isConnected()
     }
 
     // 用于更新输出的内容

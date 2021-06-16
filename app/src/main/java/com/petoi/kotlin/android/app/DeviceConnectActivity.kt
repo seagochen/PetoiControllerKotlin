@@ -132,6 +132,5 @@ class DeviceConnectActivity : BluetoothBasedActivity() {
 
         // 更新控件状态
         updateWidgetStatus()
-        //TODO 蓝牙连接状态检测有点异常
     }
 }
