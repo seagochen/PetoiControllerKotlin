@@ -35,21 +35,21 @@ open class BluetoothBasedActivity: AppCompatActivity() {
                 PackageManager.PERMISSION_GRANTED
     }
 
-    // 弹出可选菜单
-    protected fun popupSelectableMenus(items: List<String>, callback: (Int) -> Unit) {
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this@BluetoothBasedActivity)
-
-        builder.setItems(
-                items.toTypedArray()
-        ) { dialog, index ->
-            // 把用户选择的设备编号通过回调函数的形式返回给用户
-            callback(index)
-
-            // 把对话框关闭
-            dialog.dismiss()
-        }
-        builder.show()
-    }
+//    // 弹出可选菜单
+//    protected fun popupSelectableMenus(items: List<String>, callback: (Int) -> Unit) {
+//        val builder: AlertDialog.Builder = AlertDialog.Builder(this@BluetoothBasedActivity)
+//
+//        builder.setItems(
+//                items.toTypedArray()
+//        ) { dialog, index ->
+//            // 把用户选择的设备编号通过回调函数的形式返回给用户
+//            callback(index)
+//
+//            // 把对话框关闭
+//            dialog.dismiss()
+//        }
+//        builder.show()
+//    }
 
 
     // 在Activity恢复后，蓝牙的连结也要恢复
@@ -164,7 +164,7 @@ open class BluetoothBasedActivity: AppCompatActivity() {
         }
     }
 
-    // 设置用户反馈
+    // textview 反馈部分
     protected fun setTextView(tv: TextView) {
 
         // 关闭正在执行的线程，并等待线程退出

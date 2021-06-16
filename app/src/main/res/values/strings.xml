@@ -42,10 +42,10 @@
     <string name="servo15">Servo 15</string>
 
     <!-- MotionActivity -->
-    <string name="lb_name">Name</string>
-    <string name="lb_action">Action</string>
+    <string name="lb_motion_name">Name</string>
+    <string name="lb_motion_action">Action</string>
 
-    <!-- DeviceControlActivity -->
-    <string name="lb_refresh">Refresh</string>
-    <string name="lb_connect">Connect</string>
+    <!-- DeviceConnectActivity -->
+    <string name="lb_connect_search">Search</string>
+    <string name="lb_connect_connect">Connect</string>
 </resources>

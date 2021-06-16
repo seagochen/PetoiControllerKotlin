@@ -17,7 +17,7 @@ class DeviceConnectActivity : BluetoothBasedActivity() {
     // 绑定搜索按钮功能
     private fun bindSearchBtnView() {
         // 控件绑定
-//        searchBtn = findViewById(R.id.searchBtn)
+        searchBtn = findViewById(R.id.btn_connect_search)
 
         // 事件绑定
         searchBtn.setOnClickListener {
@@ -40,12 +40,15 @@ class DeviceConnectActivity : BluetoothBasedActivity() {
 
                     val keys = foundDeviceNames()
 
-                    if (keys.size > 0) {
+                    // TODO 把需要搜索到的设备名列表写入listview中
 
-                        popupSelectableMenus(keys.toList()) { value ->
-                            bleDeviceSelected = keys[value]
-                        }
-                    }
+//                    // 弹出式可选菜单
+//                    if (keys.size > 0) {
+//
+//                        popupSelectableMenus(keys.toList()) { value ->
+//                            bleDeviceSelected = keys[value]
+//                        }
+//                    }
                 }
             }
         }
@@ -57,7 +60,7 @@ class DeviceConnectActivity : BluetoothBasedActivity() {
 
     // 绑定连结按钮功能
     private fun bindConnectBtnView() {
-//        connectBtn = findViewById(R.id.connectBtn)
+        connectBtn = findViewById(R.id.btn_connect_connect)
 
         connectBtn.setOnClickListener {
 
@@ -78,6 +81,8 @@ class DeviceConnectActivity : BluetoothBasedActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_connection)
-        //TODO
+
+        bindSearchBtnView()
+        bindConnectBtnView()
     }
 }
