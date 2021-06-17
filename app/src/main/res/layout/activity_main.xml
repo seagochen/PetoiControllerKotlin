@@ -61,7 +61,7 @@
                 <ImageButton
                     android:id="@+id/btn_main_up"
                     android:contentDescription="@string/ibt_main_up"
-                    android:background="#00000000"
+                    android:background="@color/transparency"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_alignParentTop="true"
@@ -72,7 +72,7 @@
                 <ImageButton
                     android:id="@+id/btn_main_down"
                     android:contentDescription="@string/ibt_main_down"
-                    android:background="#00000000"
+                    android:background="@color/transparency"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_alignParentBottom="true"
@@ -83,7 +83,7 @@
                 <ImageButton
                     android:id="@+id/btn_main_left"
                     android:contentDescription="@string/ibt_main_left"
-                    android:background="#00000000"
+                    android:background="@color/transparency"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_alignParentStart="true"
@@ -94,7 +94,7 @@
                 <ImageButton
                     android:id="@+id/btn_main_right"
                     android:contentDescription="@string/ibt_main_right"
-                    android:background="#00000000"
+                    android:background="@color/transparency"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_alignParentEnd="true"
@@ -116,23 +116,6 @@
             android:layout_marginStart="60dp"
             android:orientation="vertical" >
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="5dp"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:background="@color/little_gray"
-                    android:scaleType="fitXY"
-                    android:src="@drawable/positive"
-                    android:contentDescription="@string/ibt_add" />
-
-            </LinearLayout>
-
-
             <ListView
                 android:id="@+id/list_main_motions"
                 android:layout_width="500dp"
@@ -140,8 +123,6 @@
                 android:background="@color/yolk_yellow">
             </ListView>
         </LinearLayout>
-
-
 
     </RelativeLayout>
 

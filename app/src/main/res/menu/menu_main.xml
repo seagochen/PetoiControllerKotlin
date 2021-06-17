@@ -3,5 +3,5 @@
     <item android:id="@+id/menu_main_calib"
         android:title="@string/menu_main_calib" />
     <item android:id="@+id/menu_main_connector"
-        android:title="@string/menu_main_connector" />
+        android:title="@string/menu_main_connect" />
 </menu>

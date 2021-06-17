@@ -9,7 +9,7 @@
     
     <!-- MainActivity -->
     <string name="menu_main_calib">Calibration</string>
-    <string name="menu_main_connector">Connect</string>
+    <string name="menu_main_connect">Connection</string>
 
     <string name="ibt_main_up">Up</string>
     <string name="ibt_main_down">Down</string>
@@ -47,5 +47,5 @@
 
     <!-- DeviceConnectActivity -->
     <string name="lb_connect_search">Search</string>
-    <string name="lb_connect_connect">Connect</string>
+    <string name="lb_connect_connect">Connection</string>
 </resources>
