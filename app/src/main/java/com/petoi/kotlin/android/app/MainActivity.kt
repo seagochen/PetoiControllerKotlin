@@ -12,13 +12,13 @@ import com.petoi.kotlin.android.app.bluetooth.BluetoothBasedActivity
 import com.petoi.kotlin.android.app.widgets.MainPopupMenu
 
 enum class KineState {
-    NORMAL, RUN, CRAWL, STOP
+    NORMAL, RUN, CRAWL
 }
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 class MainActivity : BluetoothBasedActivity() {
 
-    private var kinestate: KineState = KineState.STOP
+    private var kinestate: KineState = KineState.NORMAL
 
     // 绑定弹出菜单
     private fun bindPopupMenu() {
@@ -37,54 +37,117 @@ class MainActivity : BluetoothBasedActivity() {
         val left = findViewById<ImageButton>(R.id.btn_main_left)
         val right = findViewById<ImageButton>(R.id.btn_main_right)
 
-        
+        // 前
         up.setOnTouchListener { v, event ->
             when (event.getAction()) {
                 MotionEvent.ACTION_DOWN -> {
                     Log.d("MainActivity", "up pressed")
+
+                    // 执行指令
+                    when(kinestate) {
+                        KineState.CRAWL-> {
+                            send("kcrF")
+                        }
+
+                        KineState.RUN -> {
+                            send("ktrF")
+                        }
+
+                        else -> {
+                            send("kwkF")
+                        }
+                    }
                 }
                 MotionEvent.ACTION_UP -> {
                     Log.d("MainActivity", "up released")
                     v.performClick()
+
+                    // 执行指令
+                    send("kbalance")
                 }
             }
             return@setOnTouchListener true
         }
 
+        // 后
         down.setOnTouchListener { v, event ->
             when (event.getAction()) {
                 MotionEvent.ACTION_DOWN -> {
                     Log.d("MainActivity", "down pressed")
+
+                    // 执行指令
+                    send("kbk")
                 }
                 MotionEvent.ACTION_UP -> {
                     Log.d("MainActivity", "down released")
                     v.performClick()
+
+                    // 执行指令
+                    send("kbalance")
                 }
             }
             return@setOnTouchListener true
         }
 
+        // 左
         left.setOnTouchListener { v, event ->
             when (event.getAction()) {
                 MotionEvent.ACTION_DOWN -> {
                     Log.d("MainActivity", "left pressed")
+
+                    // 执行指令
+                    when(kinestate) {
+                        KineState.CRAWL-> {
+                            send("kcrL")
+                        }
+
+                        KineState.RUN -> {
+                            send("ktrL")
+                        }
+
+                        else -> {
+                            send("kwkL")
+                        }
+                    }
                 }
                 MotionEvent.ACTION_UP -> {
                     Log.d("MainActivity", "left released")
                     v.performClick()
+
+                    // 执行指令
+                    send("kbalance")
                 }
             }
             return@setOnTouchListener true
         }
 
+        // 右
         right.setOnTouchListener { v, event ->
             when (event.getAction()) {
                 MotionEvent.ACTION_DOWN -> {
                     Log.d("MainActivity", "right pressed")
+
+                    // 执行指令
+                    when(kinestate) {
+                        KineState.CRAWL-> {
+                            send("kcrR")
+                        }
+
+                        KineState.RUN -> {
+                            send("ktrR")
+                        }
+
+                        else -> {
+                            send("kwkR")
+                        }
+                    }
                 }
                 MotionEvent.ACTION_UP -> {
                     Log.d("MainActivity", "right released")
                     v.performClick()
+
+                    // 执行指令
+                    send("kbalance")
                 }
             }
             return@setOnTouchListener true
@@ -98,15 +161,15 @@ class MainActivity : BluetoothBasedActivity() {
         val normal = findViewById<Button>(R.id.btn_main_low_velocity)
 
         crawl.setOnClickListener {
-
+            kinestate = KineState.CRAWL
         }
 
         run.setOnClickListener {
-
+            kinestate = KineState.RUN
         }
 
         normal.setOnClickListener {
-
+            kinestate = KineState.NORMAL
         }
     }
 

@@ -104,6 +104,7 @@ class DeviceConnectActivity : BluetoothBasedActivity() {
         }
     }
 
+    // 自动更新窗口组件状态
     private fun updateWidgetStatus() {
         if (isConnected()) {
             "Disconnect".also { connectBtn.text = it }
