@@ -116,10 +116,39 @@
             android:layout_marginStart="60dp"
             android:orientation="vertical" >
 
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp"
+                android:layout_marginStart="326dp">
+
+                <ImageButton
+                    android:id="@+id/btn_main_add"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:scaleType="fitXY"
+                    android:background="@color/little_gray"
+                    android:src="@android:drawable/ic_input_add"
+                    android:contentDescription="@string/ibt_main_remove" />
+
+                <ImageButton
+                    android:id="@+id/btn_main_remove"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:scaleType="fitXY"
+                    android:background="@color/little_gray"
+                    android:src="@android:drawable/ic_delete"
+                    android:contentDescription="@string/ibt_main_remove" />
+            </LinearLayout>
+
             <ListView
                 android:id="@+id/list_main_motions"
-                android:layout_width="500dp"
-                android:layout_height="300dp"
+                android:layout_width="400dp"
+                android:layout_height="256dp"
                 android:background="@color/yolk_yellow">
             </ListView>
         </LinearLayout>

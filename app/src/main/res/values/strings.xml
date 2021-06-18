@@ -20,7 +20,8 @@
     <string name="ibt_main_medium">MediumVelocity</string>
     <string name="ibt_main_low">LowVelocity</string>
 
-    <string name="ibt_add">AddMotion</string>
+    <string name="ibt_main_add">AddMotion</string>
+    <string name="ibt_main_remove">RemoveMotion</string>
 
     <!-- CalibrationActivity -->
     <string name="img_illustration">PetoiBittle</string>

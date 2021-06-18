@@ -14,6 +14,7 @@ class CalibrationActivity : BluetoothBasedActivity() {
         btn.setOnClickListener {
             intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+            finish()
         }
     }
 

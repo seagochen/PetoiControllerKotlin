@@ -6,7 +6,7 @@
 
     <TextView
         android:id="@+id/tv_main_motion_list_text"
-        android:layout_width="200dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:text="@string/lb_motion_name"
@@ -21,18 +21,6 @@
         android:scaleType="fitXY"
         android:background="@color/little_gray"
         android:src="@android:drawable/ic_menu_edit"
-        android:contentDescription="@string/lb_motion_name" />
-
-
-    <ImageButton
-        android:id="@+id/btn_main_motion_list_remove"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_gravity="center"
-        android:layout_marginStart="10dp"
-        android:scaleType="fitXY"
-        android:background="@color/little_gray"
-        android:src="@android:drawable/ic_delete"
         android:contentDescription="@string/lb_motion_name" />
 
 </LinearLayout>

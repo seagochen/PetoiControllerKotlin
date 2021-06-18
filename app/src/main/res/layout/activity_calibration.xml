@@ -50,7 +50,7 @@
                     android:layout_height="40dp"
                     android:src="@drawable/positive"
                     android:scaleType="fitXY"
-                    android:background="#00000000"
+                    android:background="@color/transparency"
                     android:contentDescription="@string/ibt_increase" />
 
                 <ImageButton
@@ -60,7 +60,7 @@
                     android:layout_marginStart="20dp"
                     android:src="@drawable/negative"
                     android:scaleType="fitXY"
-                    android:background="#00000000"
+                    android:background="@color/transparency"
                     android:contentDescription="@string/ibt_increase"/>
 
                 <Spinner
