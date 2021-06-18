@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menu_main_calib"
-        android:title="@string/menu_main_calib" />
     <item android:id="@+id/menu_main_connector"
         android:title="@string/menu_main_connect" />
+    <item android:id="@+id/menu_main_calib"
+        android:title="@string/menu_main_calib" />
 </menu>

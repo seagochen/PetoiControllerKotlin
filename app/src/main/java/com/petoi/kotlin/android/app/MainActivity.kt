@@ -1,6 +1,7 @@
 package com.petoi.kotlin.android.app
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -15,10 +16,15 @@ enum class KineState {
     NORMAL, RUN, CRAWL
 }
 
+enum class MotionItemState {
+    EDIT, DELETE
+}
+
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 class MainActivity : BluetoothBasedActivity() {
 
     private var kinestate: KineState = KineState.NORMAL
+    private var itemState: MotionItemState = MotionItemState.EDIT
 
     // 绑定弹出菜单
     private fun bindPopupMenu() {
@@ -173,6 +179,23 @@ class MainActivity : BluetoothBasedActivity() {
         }
     }
 
+    // 绑定动作增删按钮
+    private fun bindMotionItemButton() {
+        val btnAdd = findViewById<ImageButton>(R.id.btn_main_add)
+        val btnRmv = findViewById<ImageButton>(R.id.btn_main_remove)
+
+        btnAdd.setOnClickListener {
+            val intent = Intent(this@MainActivity, MotionsControlActivity::class.java)
+            intent.putExtra("position", -1)
+            intent.putExtra("cmdName", "")
+            intent.putExtra("cmdDetail", "")
+            startActivity(intent)
+        }
+        btnRmv.setOnClickListener {
+            itemState = MotionItemState.DELETE
+        }
+    }
+
     // Android Activity初始化后的调用函数
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -183,5 +206,6 @@ class MainActivity : BluetoothBasedActivity() {
         bindPopupMenu()
         bindMotionDir()
         bindKineState()
+        bindMotionItemButton()
     }
 }

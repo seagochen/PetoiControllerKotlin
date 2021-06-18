@@ -123,6 +123,7 @@
                 android:layout_marginBottom="10dp"
                 android:layout_marginStart="326dp">
 
+                <!-- 新增动作 -->
                 <ImageButton
                     android:id="@+id/btn_main_add"
                     android:layout_width="32dp"
@@ -133,6 +134,7 @@
                     android:src="@android:drawable/ic_input_add"
                     android:contentDescription="@string/ibt_main_remove" />
 
+                <!-- 删除动作 -->
                 <ImageButton
                     android:id="@+id/btn_main_remove"
                     android:layout_width="32dp"
