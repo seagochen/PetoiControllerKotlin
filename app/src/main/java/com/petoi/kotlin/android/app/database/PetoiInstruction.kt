@@ -34,7 +34,7 @@ open class PetoiInstruction {
             id_suffix = 0
         }
 
-        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss-", Locale.getDefault())
+        val sdf = SimpleDateFormat("yyyyMMddHHmmss-", Locale.getDefault())
         val res = sdf.format(Date()) + id_suffix.toString()
         id_suffix++
 

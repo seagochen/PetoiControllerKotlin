@@ -151,8 +151,7 @@
                 android:id="@+id/list_main_motions"
                 android:layout_width="400dp"
                 android:layout_height="256dp"
-                android:background="@color/yolk_yellow">
-            </ListView>
+                android:background="@color/yolk_yellow" />
         </LinearLayout>
 
     </RelativeLayout>

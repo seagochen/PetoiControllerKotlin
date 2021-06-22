@@ -2,6 +2,7 @@ package com.petoi.kotlin.android.app.widgets
 
 import android.content.Context
 import android.content.Intent
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
@@ -15,11 +16,13 @@ open class MotionEditorAdapter(
 
     private var commands: List<Pair<String, String>>
     private var context: Context
+    private var layoutInflater: LayoutInflater
 
     // 构造函数初始化数据
     init {
         this.context = context
         commands = data
+        layoutInflater = LayoutInflater.from(context)
     }
 
     override fun getCount(): Int {
@@ -40,7 +43,7 @@ open class MotionEditorAdapter(
         val wrapper:MotionItemViewWrapper?
 
         if (row == null) {
-            row = View.inflate(context, R.layout.layout_main_motionlist, parent)
+            row = layoutInflater.inflate(R.layout.layout_main_motionlist, parent, false)
             wrapper = MotionItemViewWrapper(row)
         } else {
             wrapper = row.getTag() as MotionItemViewWrapper?

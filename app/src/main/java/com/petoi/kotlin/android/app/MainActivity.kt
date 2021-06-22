@@ -13,6 +13,7 @@ import androidx.annotation.RequiresApi
 import com.petoi.kotlin.android.app.bluetooth.BluetoothBasedActivity
 import com.petoi.kotlin.android.app.database.DatabaseHelper
 import com.petoi.kotlin.android.app.widgets.MainPopupMenu
+import com.petoi.kotlin.android.app.widgets.MotionEditorAdapter
 
 enum class KineState {
     NORMAL, RUN, CRAWL
@@ -203,14 +204,11 @@ class MainActivity : BluetoothBasedActivity() {
         val motionList = findViewById<ListView>(R.id.list_main_motions)
 
         // 从数据库中读取全部数据
-        val items = sqliteDB.keys()
+        val items = sqliteDB.items()
         if (items.size > 0) {
-//            val editAdapter = MotionEditorAdapter(this@MainActivity, items)
-//            motionList.adapter = editAdapter
+            val editAdapter = MotionEditorAdapter(this@MainActivity, items)
+            motionList.adapter = editAdapter
 
-            for (item in items) {
-                Log.d("MainActivity", "SQL: $item")
-            }
         }
     }
 

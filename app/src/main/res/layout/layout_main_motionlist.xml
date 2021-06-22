@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:text="@string/lb_motion_name"
-        android:textSize="30sp" />
+        android:textSize="26sp" />
 
     <ImageButton
         android:id="@+id/btn_main_motion_list_edit"
