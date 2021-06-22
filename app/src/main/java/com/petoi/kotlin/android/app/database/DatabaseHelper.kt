@@ -5,6 +5,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
+import kotlinx.coroutines.delay
 import java.lang.Exception
 
 open class DatabaseHelper(context: Context) :
@@ -28,7 +29,7 @@ open class DatabaseHelper(context: Context) :
 
         // 写入数据库中
         for (values in defaultIns) {
-            writableDatabase.insert(petoi.table_name, null, values)
+            db?.insert(petoi.table_name, null, values)
         }
     }
 
@@ -51,14 +52,14 @@ open class DatabaseHelper(context: Context) :
 
         // 写入数据库中
         for (values in defaultIns) {
-            writableDatabase.insert(petoi.table_name, null, values)
+            db?.insert(petoi.table_name, null, values)
         }
     }
 
     // 插入数据
     fun insertInstruction(name: String, command: String): Pair<Boolean, String> {
 
-        if (containKeys().contains(name)) {
+        if (keys().contains(name)) {
             return Pair(false, "Cannot insert new key/value pair to database," +
                     " because duplicate name found")
         }
@@ -71,7 +72,7 @@ open class DatabaseHelper(context: Context) :
     // 查找数据
     fun searchInstruction(name: String): Pair<Boolean, String> {
 
-        if (!containKeys().contains(name)) {
+        if (!keys().contains(name)) {
             return Pair(false, "Cannot found the given name, not exist or invalid name as input")
         }
 
@@ -110,7 +111,7 @@ open class DatabaseHelper(context: Context) :
 
     // 更新系统指令
     fun updateInstruction(name: String, command: String): Pair<Boolean, String> {
-        if (!containKeys().contains(name)) {
+        if (!keys().contains(name)) {
             return Pair(false, "Cannot found the given name, not exist or invalid name as input")
         }
 
@@ -136,7 +137,7 @@ open class DatabaseHelper(context: Context) :
 
     // 删除指令
     fun deleteInstruction(name: String): Pair<Boolean, String> {
-        if (!containKeys().contains(name)) {
+        if (!keys().contains(name)) {
             return Pair(false, "Cannot found the given name, not exist or invalid name as input")
         }
 
@@ -158,7 +159,44 @@ open class DatabaseHelper(context: Context) :
         }
     }
 
-    fun containKeys(): List<String> {
+    fun items(): List<Pair<String, String>> {
+        val items = mutableListOf<Pair<String, String>>()
+
+        val projection =  arrayOf(petoi.column_name, petoi.column_ins)
+
+        // 查询可读数据库
+        val cursor = readableDatabase.query(
+            petoi.table_name,
+            projection,
+            null,
+            null,
+            null,
+            null,
+            null)
+
+        // handle data
+        try {
+            // only deal with the first item
+            if (cursor.moveToFirst()) {
+                do {
+                    val name = cursor.getString(cursor.getColumnIndex(petoi.column_name))
+                    val inst = cursor.getString(cursor.getColumnIndex(petoi.column_ins))
+                    items.add(Pair(name, inst))
+                } while (cursor.moveToNext())
+            }
+        } catch (e: Exception) {
+            Log.d("DatabaseHelper", "searchInstruction failed", e)
+        } finally {
+            if(cursor != null && !cursor.isClosed){
+                cursor.close()
+            }
+        }
+
+        // return
+        return items
+    }
+
+    fun keys(): List<String> {
 
         val names = mutableListOf<String>()
 

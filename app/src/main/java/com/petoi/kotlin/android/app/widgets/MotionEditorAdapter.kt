@@ -2,27 +2,23 @@ package com.petoi.kotlin.android.app.widgets
 
 import android.content.Context
 import android.content.Intent
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
-import com.petoi.kotlin.android.app.MotionsControlActivity
+import com.petoi.kotlin.android.app.MotionsEditActivity
 import com.petoi.kotlin.android.app.R
 
-open class MotionEditorListViewAdapter(
+open class MotionEditorAdapter(
     context: Context,
-    inflater: LayoutInflater,
-    data: MutableList<Pair<String, String>>): BaseAdapter() {
+    data: List<Pair<String, String>>): BaseAdapter() {
 
-    private var commands: MutableList<Pair<String, String>>
-    private var layoutInflater: LayoutInflater
+    private var commands: List<Pair<String, String>>
     private var context: Context
 
     // 构造函数初始化数据
     init {
         this.context = context
-        layoutInflater = inflater
         commands = data
     }
 
@@ -44,7 +40,7 @@ open class MotionEditorListViewAdapter(
         val wrapper:MotionItemViewWrapper?
 
         if (row == null) {
-            row = layoutInflater.inflate(R.layout.layout_main_motionlist, parent, false)
+            row = View.inflate(context, R.layout.layout_main_motionlist, parent)
             wrapper = MotionItemViewWrapper(row)
         } else {
             wrapper = row.getTag() as MotionItemViewWrapper?
@@ -60,7 +56,7 @@ open class MotionEditorListViewAdapter(
         // 对按键设置事件响应
         if (wrapper != null) {
             wrapper.getEditButton().setOnClickListener {
-                val intent = Intent(context, MotionsControlActivity::class.java)
+                val intent = Intent(context, MotionsEditActivity::class.java)
                 intent.putExtra("position", position)
                 intent.putExtra("cmdName", commands[position].first)
                 intent.putExtra("cmdDetail", commands[position].second)

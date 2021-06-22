@@ -8,8 +8,10 @@ import android.util.Log
 import android.view.MotionEvent
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.ListView
 import androidx.annotation.RequiresApi
 import com.petoi.kotlin.android.app.bluetooth.BluetoothBasedActivity
+import com.petoi.kotlin.android.app.database.DatabaseHelper
 import com.petoi.kotlin.android.app.widgets.MainPopupMenu
 
 enum class KineState {
@@ -25,6 +27,7 @@ class MainActivity : BluetoothBasedActivity() {
 
     private var kinestate: KineState = KineState.NORMAL
     private var itemState: MotionItemState = MotionItemState.EDIT
+    private val sqliteDB = DatabaseHelper(this)
 
     // 绑定弹出菜单
     private fun bindPopupMenu() {
@@ -97,7 +100,7 @@ class MainActivity : BluetoothBasedActivity() {
 
         // 左
         left.setOnTouchListener { v, event ->
-            when (event.getAction()) {
+            when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     Log.d("MainActivity", "left pressed")
 
@@ -129,7 +132,7 @@ class MainActivity : BluetoothBasedActivity() {
 
         // 右
         right.setOnTouchListener { v, event ->
-            when (event.getAction()) {
+            when (event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     Log.d("MainActivity", "right pressed")
 
@@ -185,7 +188,7 @@ class MainActivity : BluetoothBasedActivity() {
         val btnRmv = findViewById<ImageButton>(R.id.btn_main_remove)
 
         btnAdd.setOnClickListener {
-            val intent = Intent(this@MainActivity, MotionsControlActivity::class.java)
+            val intent = Intent(this@MainActivity, MotionsEditActivity::class.java)
             intent.putExtra("position", -1)
             intent.putExtra("cmdName", "")
             intent.putExtra("cmdDetail", "")
@@ -193,6 +196,21 @@ class MainActivity : BluetoothBasedActivity() {
         }
         btnRmv.setOnClickListener {
             itemState = MotionItemState.DELETE
+        }
+    }
+
+    private fun bindMotionItemList() {
+        val motionList = findViewById<ListView>(R.id.list_main_motions)
+
+        // 从数据库中读取全部数据
+        val items = sqliteDB.keys()
+        if (items.size > 0) {
+//            val editAdapter = MotionEditorAdapter(this@MainActivity, items)
+//            motionList.adapter = editAdapter
+
+            for (item in items) {
+                Log.d("MainActivity", "SQL: $item")
+            }
         }
     }
 
@@ -207,5 +225,6 @@ class MainActivity : BluetoothBasedActivity() {
         bindMotionDir()
         bindKineState()
         bindMotionItemButton()
+        bindMotionItemList()
     }
 }

@@ -12,5 +12,6 @@ class ApplicationData : Application() {
         @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
         val bleHandler = BluetoothHandlerExt()
         val uiCalibFeedback = UiCalibVerification()
+
     }
 }

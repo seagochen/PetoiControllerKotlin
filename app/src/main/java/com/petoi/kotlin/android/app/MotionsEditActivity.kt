@@ -4,8 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import com.petoi.kotlin.android.app.bluetooth.BluetoothBasedActivity
+import com.petoi.kotlin.android.app.database.DatabaseHelper
 
-class MotionsControlActivity : BluetoothBasedActivity() {
+class MotionsEditActivity : BluetoothBasedActivity() {
+
+    // private val sqliteDB = DatabaseHelper(this)
 
     fun bindBackBtn() {
         val btn = findViewById<Button>(R.id.btn_motion_back)

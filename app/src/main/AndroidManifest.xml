@@ -22,7 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PetoiControllerKotlin">
         <activity android:name=".UserDefineMotionActivity"/>
-        <activity android:name=".MotionsControlActivity" />
+        <activity android:name=".MotionsEditActivity" />
         <activity android:name=".CalibrationActivity" />
         <activity android:name=".DeviceConnectActivity" />
         

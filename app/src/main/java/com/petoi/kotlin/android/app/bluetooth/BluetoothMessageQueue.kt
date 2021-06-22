@@ -32,6 +32,13 @@ open class BluetoothMessageQueue {
     // 把数据放入缓存中
     @Synchronized
     fun put(str: String) {
+
+        // 缓存最多20条数据
+        if (petoiFeedbacks.size > 20) {
+            petoiFeedbacks.removeFirst()
+        }
+
+        // 把数据缓存进入list中
         petoiFeedbacks.add(str)
 
         // 更新时间戳

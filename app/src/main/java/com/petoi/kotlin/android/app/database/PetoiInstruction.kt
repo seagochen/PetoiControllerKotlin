@@ -2,6 +2,7 @@ package com.petoi.kotlin.android.app.database
 
 import android.content.ContentValues
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.*
 
 open class PetoiInstruction {
@@ -10,6 +11,9 @@ open class PetoiInstruction {
     val column_id = "id"
     val column_name = "name"
     val column_ins = "instruction"
+
+    var id_suffix = 0
+    var prev = System.currentTimeMillis()
 
     fun createTable(): String {
         val sentence = "CREATE TABLE IF NOT EXISTS $table_name (" +
@@ -25,8 +29,16 @@ open class PetoiInstruction {
     }
 
     private fun getCurrentDate(): String {
-        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault())
-        return sdf.format(Date())
+
+        if (System.currentTimeMillis() - prev > 1000) {
+            id_suffix = 0
+        }
+
+        val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss-", Locale.getDefault())
+        val res = sdf.format(Date()) + id_suffix.toString()
+        id_suffix++
+
+        return res
     }
 
 
