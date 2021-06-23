@@ -233,7 +233,13 @@ class MainActivity : BluetoothBasedActivity() {
 
                 // 删除指令
                 MotionItemState.DELETE -> {
-                    editAdapter.remove(position)
+                    // 从列表中删除数据
+                    val key = editAdapter.remove(position)
+
+                    if (key != "") {
+                        // 从数据库中删除数据
+                        sqliteDB.deleteInstruction(key)
+                    }
                 }
 
                 // 发送指令

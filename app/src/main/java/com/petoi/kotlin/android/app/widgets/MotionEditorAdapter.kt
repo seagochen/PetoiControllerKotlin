@@ -69,11 +69,13 @@ open class MotionEditorAdapter(
         return row
     }
 
-    fun remove(position: Int) {
+    fun remove(position: Int): String {
         if (commands.size > 0) {
-            commands.removeAt(position)
+            val item = commands.removeAt(position)
+            notifyDataSetChanged()
+            return item.first
         }
 
-        notifyDataSetChanged()
+        return ""
     }
 }
