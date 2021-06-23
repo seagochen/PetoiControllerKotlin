@@ -135,4 +135,13 @@ class DeviceConnectActivity : BluetoothBasedActivity() {
         // 更新控件状态
         updateWidgetStatus()
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+
+        // 跳转回MainActivity
+        intent = Intent(this, MainActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
 }

@@ -105,7 +105,6 @@ open class BluetoothHandler {
         }
 
         // 从缓存中获取数据
-        // TODO 可能会有失败，需要手动调节一个比较合适的等待时间
         return  gattCallback.getMessage()
     }
 

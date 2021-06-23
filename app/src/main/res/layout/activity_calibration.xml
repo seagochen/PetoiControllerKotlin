@@ -29,6 +29,12 @@
             android:src="@drawable/illustration"
             android:contentDescription="@string/img_illustration" />
 
+        <TextView
+            android:id="@+id/tv_calib_output"
+            android:layout_width="1dp"
+            android:layout_height="1dp"
+            android:visibility="invisible"/>
+
         <!-- 控制按钮组 -->
         <RelativeLayout
             android:layout_weight="2"

@@ -22,6 +22,21 @@ open class BluetoothBasedActivity: AppCompatActivity() {
     // 从Application获得bluetooth管理器
     private val handler: BluetoothHandlerExt = ApplicationData.bleHandler
 
+    // 从Application获得校准处理模块
+    private val calib = ApplicationData.calibration
+
+    // 用于更新输出的内容
+    private var feedbackTextview: TextView? = null
+
+    // 用于控制子线程的标识符
+    private var isTvUpdateRunning = false
+
+    // 用于输出的缓冲字符串
+    private var feedback: String = ""
+
+    // 存放用户最近的指令
+    private var lastCmd: String = ""
+
 
     // 确定 ACCESS_FINE_LOCATION 权限是否被赋予了App
     // 它是只读的属性，每次用户请求的时候计算一次
@@ -131,6 +146,9 @@ open class BluetoothBasedActivity: AppCompatActivity() {
 
         // 发送指令
         handler.send(msg)
+
+        // 更新指令
+        lastCmd = msg
     }
 
     // 检测是否与BLE设备建立了连接
@@ -138,14 +156,7 @@ open class BluetoothBasedActivity: AppCompatActivity() {
         return handler.isConnected()
     }
 
-    // 用于更新输出的内容
-    private var feedbackTextview: TextView? = null
 
-    // 用于控制子线程的标识符
-    private var isTvUpdateRunning = false
-
-    // 用于输出的缓冲字符串
-    private var feedback: String = ""
 
     // 使用线程函数创建线程
     private val tvUpdateThread: Thread = thread {
@@ -159,7 +170,13 @@ open class BluetoothBasedActivity: AppCompatActivity() {
                 }
             }
 
-            //TODO 需要实现一个对C命令的反馈，具体实现方法参考Qt代码
+            // 当用户发送c指令后，需要对这个指令的反馈信息进行专门处理
+            if (lastCmd == "c") {
+                if (calib.updateCalibrationInfo(feedback)) {
+                    calib.debug() // 打印debug信息
+                    break // 已经获得了有效数据，结束循环
+                }
+            }
 
             // 休息
             Thread.sleep(10)
@@ -168,17 +185,28 @@ open class BluetoothBasedActivity: AppCompatActivity() {
 
     // textview 反馈部分
     protected fun setTextView(tv: TextView) {
+        // 更新textview，并重新执行子线程更新任务
+        feedbackTextview = tv
+    }
 
+    // 启动C监听
+    protected fun startCalibListening() {
+
+        // 先关闭
+        stopCalibListening()
+
+        // 更新textview，并重新执行子线程更新任务
+        isTvUpdateRunning = true
+        tvUpdateThread.start()
+    }
+
+    // 关闭C监听
+    protected fun stopCalibListening() {
         // 关闭正在执行的线程，并等待线程退出
         if (isTvUpdateRunning) {
             isTvUpdateRunning = false
             tvUpdateThread.join()
         }
-
-        // 更新textview，并重新执行子线程更新任务
-        feedbackTextview = tv
-        isTvUpdateRunning = true
-        tvUpdateThread.start()
     }
 
     // 向用户发起权限请求

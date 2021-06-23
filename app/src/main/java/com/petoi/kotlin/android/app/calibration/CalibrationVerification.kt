@@ -86,7 +86,7 @@ open class CalibrationVerification: CalibFeedbackBasic() {
             // input value check
             for (i in 0 until 16) {
 
-                Log.i("UiCalibVerification", "check value: $servosList[i]")
+                Log.i("UiCalibVerification", "check value: ${servosList[i]}")
                 if (!isValidAngleDegree(servosList[i])) {
                     Log.i("UiCalibVerification", "failed")
                     return false
@@ -96,10 +96,10 @@ open class CalibrationVerification: CalibFeedbackBasic() {
             //TODO 赋值，以后如果有需要可能会扩展舵机数
             servos[0] = servos[0].copy(second = servosList[0].toInt())
 
-            servos[1] = servos[1].copy(second = servosList[1].toInt())
-            servos[2] = servos[2].copy(second = servosList[2].toInt())
-            servos[3] = servos[3].copy(second = servosList[3].toInt())
-            servos[4] = servos[4].copy(second = servosList[4].toInt())
+            servos[1] = servos[1].copy(second = servosList[8].toInt())
+            servos[2] = servos[2].copy(second = servosList[9].toInt())
+            servos[3] = servos[3].copy(second = servosList[10].toInt())
+            servos[4] = servos[4].copy(second = servosList[11].toInt())
 
             servos[5] = servos[5].copy(second = servosList[12].toInt())
             servos[6] = servos[6].copy(second = servosList[13].toInt())
@@ -121,5 +121,11 @@ open class CalibrationVerification: CalibFeedbackBasic() {
         // 调整指令
         val cmd = "c$name 0"
         return Pair<Boolean, String>(true, cmd)
+    }
+
+    fun debug() {
+        for(ser in servos) {
+            Log.d("Calibration", "Servo: ${ser.first} --- ${ser.second}")
+        }
     }
 }
