@@ -2,7 +2,7 @@ package com.petoi.kotlin.android.app.calibration
 
 import android.util.Log
 
-open class UiCalibVerification {
+open class CalibrationVerification: CalibFeedbackBasic() {
     private val servos = mutableListOf<Pair<String, Int>>()
 
     init {
@@ -65,9 +65,8 @@ open class UiCalibVerification {
     }
 
     fun updateCalibrationInfo(feedback: String): Boolean {
-        val calib = CalibFeedback()
-        var fb = calib.preprocessCalibString(feedback)
-        fb = calib.distillValidCalibString(fb)
+        var fb = preprocessCalibString(feedback)
+        fb = distillValidCalibString(fb)
 
         // 打印处理后的校准数据
         Log.i("UiCalibVerification", "calibration vals: $fb")
@@ -88,7 +87,7 @@ open class UiCalibVerification {
             for (i in 0 until 16) {
 
                 Log.i("UiCalibVerification", "check value: $servosList[i]")
-                if (!calib.isValidAngleDegree(servosList[i])) {
+                if (!isValidAngleDegree(servosList[i])) {
                     Log.i("UiCalibVerification", "failed")
                     return false
                 }

@@ -113,4 +113,9 @@ open class BluetoothHandler {
     fun isConnected(): Boolean {
         return selectedGatt != null
     }
+
+    // 清空缓存
+    fun clear() {
+        gattCallback.cleanMessageList()
+    }
 }

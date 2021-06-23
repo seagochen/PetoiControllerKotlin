@@ -3,7 +3,7 @@ package com.petoi.kotlin.android.app.calibration
 import android.util.Log
 
 
-open class CalibFeedback {
+open class CalibFeedbackBasic {
 
     private fun distillOnceMore(calib: String): String {
         val pattern = "(([-\\+]?\\d),\\s)+"

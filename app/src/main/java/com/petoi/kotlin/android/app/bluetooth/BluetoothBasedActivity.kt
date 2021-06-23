@@ -123,10 +123,14 @@ open class BluetoothBasedActivity: AppCompatActivity() {
 
     // 发送数据
     protected fun send(msg: String) {
-        handler.send(msg)
-        feedback = ""
 
-        //TODO 增加一个对C指令的检测，具体实现方法看QT版本
+        // 如果用户发送校准命令，立即清空缓存
+        if (msg == "c") {
+            handler.clear()
+        }
+
+        // 发送指令
+        handler.send(msg)
     }
 
     // 检测是否与BLE设备建立了连接
