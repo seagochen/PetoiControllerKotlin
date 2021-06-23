@@ -80,4 +80,11 @@ open class MotionEditorAdapter(
 
         return ""
     }
+
+    fun instruction(position: Int): String {
+        if (commands.size > 0) {
+            return commands[position].second
+        }
+        return ""
+    }
 }

@@ -245,7 +245,10 @@ class MainActivity : BluetoothBasedActivity() {
 
                 // 发送指令
                 MotionItemState.NORMAL -> {
-                    //TODO
+                    val cmd = editAdapter.instruction(position)
+                    if (cmd != "") {
+                        send(cmd)
+                    }
                 }
             }
         }
