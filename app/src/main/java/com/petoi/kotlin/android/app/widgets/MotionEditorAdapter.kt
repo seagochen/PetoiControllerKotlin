@@ -1,5 +1,6 @@
 package com.petoi.kotlin.android.app.widgets
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -64,13 +65,14 @@ open class MotionEditorAdapter(
                 intent.putExtra("cmdName", commands[position].first)
                 intent.putExtra("cmdDetail", commands[position].second)
                 context.startActivity(intent)
+                (context as Activity).finish()
             }
         }
         return row
     }
 
     fun remove(position: Int): String {
-        if (commands.size > 0) {
+        if (commands.size > 0 && position >= 5) {
             val item = commands.removeAt(position)
             notifyDataSetChanged()
             return item.first

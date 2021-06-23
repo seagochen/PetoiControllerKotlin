@@ -1,5 +1,6 @@
 package com.petoi.kotlin.android.app.widgets
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.util.Log
@@ -33,6 +34,7 @@ open class MainPopupMenu : PopupMenu.OnMenuItemClickListener {
                 // 跳转到校准界面
                 val intent = Intent(context, CalibrationActivity::class.java)
                 context?.startActivity(intent)
+                (context as Activity).finish()
                 true
             }
 
@@ -42,6 +44,7 @@ open class MainPopupMenu : PopupMenu.OnMenuItemClickListener {
                 // 跳转到校准界面
                 val intent = Intent(context, DeviceConnectActivity::class.java)
                 context?.startActivity(intent)
+                (context as Activity).finish()
                 true
             }
 

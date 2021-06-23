@@ -196,6 +196,7 @@ class MainActivity : BluetoothBasedActivity() {
             intent.putExtra("cmdName", "")
             intent.putExtra("cmdDetail", "")
             startActivity(intent)
+            finish()
         }
         btnRmv.setOnClickListener {
             if (itemState == MotionItemState.NORMAL) {
