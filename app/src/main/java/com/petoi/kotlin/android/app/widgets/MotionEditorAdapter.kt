@@ -14,14 +14,14 @@ open class MotionEditorAdapter(
     context: Context,
     data: List<Pair<String, String>>): BaseAdapter() {
 
-    private var commands: List<Pair<String, String>>
+    private var commands: MutableList<Pair<String, String>>
     private var context: Context
     private var layoutInflater: LayoutInflater
 
     // 构造函数初始化数据
     init {
         this.context = context
-        commands = data
+        commands = data as MutableList<Pair<String, String>>
         layoutInflater = LayoutInflater.from(context)
     }
 
@@ -66,7 +66,14 @@ open class MotionEditorAdapter(
                 context.startActivity(intent)
             }
         }
-
         return row
+    }
+
+    fun remove(position: Int) {
+        if (commands.size > 0) {
+            commands.removeAt(position)
+        }
+
+        notifyDataSetChanged()
     }
 }

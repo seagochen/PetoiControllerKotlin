@@ -10,6 +10,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ListView
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import com.petoi.kotlin.android.app.bluetooth.BluetoothBasedActivity
 import com.petoi.kotlin.android.app.database.DatabaseHelper
 import com.petoi.kotlin.android.app.widgets.MainPopupMenu
@@ -20,15 +21,16 @@ enum class KineState {
 }
 
 enum class MotionItemState {
-    EDIT, DELETE
+    NORMAL, DELETE
 }
 
 @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
 class MainActivity : BluetoothBasedActivity() {
 
     private var kinestate: KineState = KineState.NORMAL
-    private var itemState: MotionItemState = MotionItemState.EDIT
+    private var itemState: MotionItemState = MotionItemState.NORMAL
     private val sqliteDB = DatabaseHelper(this)
+    private lateinit var editAdapter: MotionEditorAdapter
 
     // 绑定弹出菜单
     private fun bindPopupMenu() {
@@ -196,7 +198,22 @@ class MainActivity : BluetoothBasedActivity() {
             startActivity(intent)
         }
         btnRmv.setOnClickListener {
-            itemState = MotionItemState.DELETE
+            if (itemState == MotionItemState.NORMAL) {
+                // update the status
+                itemState = MotionItemState.DELETE
+
+                // change the image icon
+                (it as ImageButton).setImageDrawable(ContextCompat.getDrawable(this,
+                    android.R.drawable.ic_menu_close_clear_cancel))
+
+            } else if (itemState == MotionItemState.DELETE) {
+                // update the status
+                itemState = MotionItemState.NORMAL
+
+                // change the image icon
+                (it as ImageButton).setImageDrawable(ContextCompat.getDrawable(this,
+                    android.R.drawable.ic_menu_delete))
+            }
         }
     }
 
@@ -206,9 +223,24 @@ class MainActivity : BluetoothBasedActivity() {
         // 从数据库中读取全部数据
         val items = sqliteDB.items()
         if (items.size > 0) {
-            val editAdapter = MotionEditorAdapter(this@MainActivity, items)
+            editAdapter = MotionEditorAdapter(this@MainActivity, items)
             motionList.adapter = editAdapter
+        }
 
+        // 内容事件点击
+        motionList.setOnItemClickListener { parent, view, position, id ->
+            when(itemState) {
+
+                // 删除指令
+                MotionItemState.DELETE -> {
+                    editAdapter.remove(position)
+                }
+
+                // 发送指令
+                MotionItemState.NORMAL -> {
+                    //TODO
+                }
+            }
         }
     }
 
