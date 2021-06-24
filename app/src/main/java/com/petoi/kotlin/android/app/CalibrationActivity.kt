@@ -59,11 +59,44 @@ class CalibrationActivity : BluetoothBasedActivity() {
         val addBtn = findViewById<ImageButton>(R.id.btn_calib_add)
         val desBtn = findViewById<ImageButton>(R.id.btn_calib_minus)
 
+        // 先读取当前被选中的舵机角度
+        var currentAngle = calib.angle(selectedServo)
 
+        // 定义弹出框警告信息
+        val alertBuilder = AlertDialog.Builder(this)
+        alertBuilder
+            .setTitle("Warning")
+            .setIcon(android.R.drawable.ic_dialog_alert)
+            .setMessage("Maximum adjustable fine angle has been reached, remove the steering arm and retry!")
+            .setPositiveButton("Ok") { dialog, which ->
+                dialog.dismiss()
+            }
+
+        // fine addition
+        addBtn.setOnClickListener {
+            val ret = calib.increaseCalibAngle(selectedServo)
+
+            if (!ret.first) {
+                alertBuilder.show()
+            }
+
+            send(ret.second)
+        }
+
+        // fine subtraction
+        desBtn.setOnClickListener {
+            val ret = calib.decreaseCalibAngle(selectedServo)
+
+            if (!ret.first) {
+                alertBuilder.show()
+            }
+
+            send(ret.second)
+        }
     }
 
     // 弹出菜单
-    private fun bindPopupMenuBtn() {
+    private fun bindSevorSelectionBtn() {
 
         // bind servo button
         val btn = findViewById<Button>(R.id.btn_calib_servor)
@@ -72,14 +105,13 @@ class CalibrationActivity : BluetoothBasedActivity() {
         // convert list to ArrayAdapter
         val datalist = calib.availableServoList()
         val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_activated_1, datalist)
-        var preSelected = 0
 
         // create alert dialog and setup its values
         val alertBuilder = AlertDialog.Builder(this)
         alertBuilder
             .setTitle("Servo Number")
             .setSingleChoiceItems(adapter, 0) { dialog, which ->
-                preSelected = which
+                selectedServo = which
             }
             .setPositiveButton("Ok") { dialog, which ->
                 when(selectedServo) {
@@ -97,10 +129,6 @@ class CalibrationActivity : BluetoothBasedActivity() {
                     else -> btn.setText(resources.getString(R.string.servo0))
                 }
 
-                selectedServo = preSelected
-                dialog.dismiss()
-            }
-            .setNegativeButton("Cancel") { dialog, which ->
                 dialog.dismiss()
             }
 
@@ -124,7 +152,7 @@ class CalibrationActivity : BluetoothBasedActivity() {
         bindSaveBtn()
         bindFineAdjustBtn()
         bindTvOutput()
-        bindPopupMenuBtn()
+        bindSevorSelectionBtn()
 
         // 设置隐形输出，并启动监听
         setTextView(tvOutput)

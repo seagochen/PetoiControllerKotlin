@@ -86,7 +86,7 @@ open class CalibrationVerification: CalibFeedbackBasic() {
             // input value check
             for (i in 0 until 16) {
 
-                Log.i("UiCalibVerification", "check value: ${servosList[i]}")
+                Log.i("UiCalibVerification", "servor# $i currently is ${servosList[i]}")
                 if (!isValidAngleDegree(servosList[i])) {
                     Log.i("UiCalibVerification", "failed")
                     return false
