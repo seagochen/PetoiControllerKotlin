@@ -173,7 +173,6 @@ open class BluetoothBasedActivity: AppCompatActivity() {
             // 当用户发送c指令后，需要对这个指令的反馈信息进行专门处理
             if (lastCmd == "c") {
                 if (calib.updateCalibrationInfo(feedback)) {
-                    calib.debug() // 打印debug信息
                     break // 已经获得了有效数据，结束循环
                 }
             }

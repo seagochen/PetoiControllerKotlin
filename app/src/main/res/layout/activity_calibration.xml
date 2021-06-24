@@ -43,6 +43,7 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
+                android:id="@+id/layout_calib_fine"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -68,15 +69,16 @@
                     android:scaleType="fitXY"
                     android:background="@color/transparency"
                     android:contentDescription="@string/ibt_increase"/>
-
-                <Spinner
-                    android:id="@+id/spn_calib_servos"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="30dp"
-                    android:layout_width="230dp"
-                    android:layout_height="40dp"/>
-
             </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_calib_servor"
+                android:layout_toEndOf="@+id/layout_calib_fine"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="60dp"
+                android:layout_marginEnd="30dp" />
 
             <Button
                 android:id="@+id/btn_calib_save"

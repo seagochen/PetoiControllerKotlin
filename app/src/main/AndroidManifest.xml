@@ -24,7 +24,7 @@
         <activity android:name=".UserDefineMotionActivity"/>
         <activity android:name=".MotionsEditActivity" />
         <activity android:name=".CalibrationActivity" />
-        <activity android:name=".DeviceConnectActivity" />
+        <activity android:name=".ConnectionActivity" />
         
         <!-- MainActivity -->
         <activity  

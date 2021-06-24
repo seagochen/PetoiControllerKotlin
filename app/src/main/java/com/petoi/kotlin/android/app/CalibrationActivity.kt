@@ -1,14 +1,14 @@
 package com.petoi.kotlin.android.app
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import com.petoi.kotlin.android.app.bluetooth.BluetoothBasedActivity
-import com.petoi.kotlin.android.app.calibration.CalibrationVerification
 
 class CalibrationActivity : BluetoothBasedActivity() {
 
@@ -17,6 +17,9 @@ class CalibrationActivity : BluetoothBasedActivity() {
 
     // textview用于数据缓存处理
     private lateinit var tvOutput: TextView
+
+    // 选中的舵机
+    private var selectedServo = 0
 
     // 绑定textview
     private fun bindTvOutput() {
@@ -59,6 +62,55 @@ class CalibrationActivity : BluetoothBasedActivity() {
 
     }
 
+    // 弹出菜单
+    private fun bindPopupMenuBtn() {
+
+        // bind servo button
+        val btn = findViewById<Button>(R.id.btn_calib_servor)
+        btn.setText(resources.getString(R.string.servo0))
+
+        // convert list to ArrayAdapter
+        val datalist = calib.availableServoList()
+        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_activated_1, datalist)
+        var preSelected = 0
+
+        // create alert dialog and setup its values
+        val alertBuilder = AlertDialog.Builder(this)
+        alertBuilder
+            .setTitle("Servo Number")
+            .setSingleChoiceItems(adapter, 0) { dialog, which ->
+                preSelected = which
+            }
+            .setPositiveButton("Ok") { dialog, which ->
+                when(selectedServo) {
+                    0 -> btn.setText(resources.getString(R.string.servo0))
+
+                    1 -> btn.setText(resources.getString(R.string.servo8))
+                    2 -> btn.setText(resources.getString(R.string.servo9))
+                    3 -> btn.setText(resources.getString(R.string.servo10))
+                    4 -> btn.setText(resources.getString(R.string.servo11))
+
+                    5 -> btn.setText(resources.getString(R.string.servo12))
+                    6 -> btn.setText(resources.getString(R.string.servo13))
+                    7 -> btn.setText(resources.getString(R.string.servo14))
+                    8 -> btn.setText(resources.getString(R.string.servo15))
+                    else -> btn.setText(resources.getString(R.string.servo0))
+                }
+
+                selectedServo = preSelected
+                dialog.dismiss()
+            }
+            .setNegativeButton("Cancel") { dialog, which ->
+                dialog.dismiss()
+            }
+
+        // bind btn onclick
+        btn.setOnClickListener {
+            alertBuilder.show()
+        }
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_calibration)
@@ -72,6 +124,7 @@ class CalibrationActivity : BluetoothBasedActivity() {
         bindSaveBtn()
         bindFineAdjustBtn()
         bindTvOutput()
+        bindPopupMenuBtn()
 
         // 设置隐形输出，并启动监听
         setTextView(tvOutput)

@@ -24,8 +24,8 @@
             android:layout_height="300dp"
             android:layout_marginTop="50dp"
             android:layout_gravity="center"
-            android:layout_marginBottom="15dp"
-            android:background="@color/yolk_yellow" />
+            android:layout_marginBottom="15dp" />
+        <!-- android:background="@color/yolk_yellow" -->
 
         <RelativeLayout
             android:gravity="center"

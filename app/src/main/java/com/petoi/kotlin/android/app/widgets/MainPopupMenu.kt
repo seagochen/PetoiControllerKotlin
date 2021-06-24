@@ -8,7 +8,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.PopupMenu
 import com.petoi.kotlin.android.app.CalibrationActivity
-import com.petoi.kotlin.android.app.DeviceConnectActivity
+import com.petoi.kotlin.android.app.ConnectionActivity
 import com.petoi.kotlin.android.app.R
 
 
@@ -42,7 +42,7 @@ open class MainPopupMenu : PopupMenu.OnMenuItemClickListener {
                 Log.d("MainDropMenu", "menu_main_connector")
 
                 // 跳转到校准界面
-                val intent = Intent(context, DeviceConnectActivity::class.java)
+                val intent = Intent(context, ConnectionActivity::class.java)
                 context?.startActivity(intent)
                 (context as Activity).finish()
                 true

@@ -3,15 +3,16 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:descendantFocusability="blocksDescendants"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:background="@drawable/selector_bg_color">
 
     <TextView
         android:id="@+id/tv_main_motion_list_text"
         android:layout_width="300dp"
+        android:textColor="@drawable/selector_text_color"
         android:focusable="false"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
-        android:text="@string/lb_motion_name"
         android:textSize="26sp" />
 
     <ImageButton

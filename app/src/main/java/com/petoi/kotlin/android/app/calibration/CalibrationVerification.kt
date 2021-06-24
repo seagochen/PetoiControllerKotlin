@@ -93,7 +93,6 @@ open class CalibrationVerification: CalibFeedbackBasic() {
                 }
             }
 
-            //TODO 赋值，以后如果有需要可能会扩展舵机数
             servos[0] = servos[0].copy(second = servosList[0].toInt())
 
             servos[1] = servos[1].copy(second = servosList[8].toInt())
@@ -123,9 +122,11 @@ open class CalibrationVerification: CalibFeedbackBasic() {
         return Pair<Boolean, String>(true, cmd)
     }
 
-    fun debug() {
-        for(ser in servos) {
-            Log.d("Calibration", "Servo: ${ser.first} --- ${ser.second}")
+    fun availableServoList(): List<String> {
+        val slist = mutableListOf<String>()
+        for (s in servos) {
+            slist.add("Servo ${s.first}")
         }
+        return slist
     }
 }

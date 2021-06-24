@@ -9,7 +9,7 @@ import com.petoi.kotlin.android.app.bluetooth.BluetoothBasedActivity
 import java.util.*
 import kotlin.concurrent.schedule
 
-class DeviceConnectActivity : BluetoothBasedActivity() {
+class ConnectionActivity : BluetoothBasedActivity() {
 
     // 用户选择的蓝牙设备名字
     private var bleDeviceSelected: String = ""
@@ -18,7 +18,7 @@ class DeviceConnectActivity : BluetoothBasedActivity() {
     private lateinit var searchBtn: Button
 
     // 可用设备列表
-    private lateinit var foundDevices: MutableList<String>
+    private var foundDevices = mutableListOf<String>()
 
     // 绑定搜索按钮功能
     private fun bindSearchBtnView() {
@@ -27,6 +27,14 @@ class DeviceConnectActivity : BluetoothBasedActivity() {
 
         // 列表绑定
         val listView = findViewById<ListView>(R.id.list_connect_devices)
+
+        // 列表内容样式
+        foundDevices.add("No Devices")
+        val arrayAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_activated_1, foundDevices)
+        listView.adapter = arrayAdapter
+
+        // list mode
+        listView.choiceMode = ListView.CHOICE_MODE_SINGLE
 
         // 事件绑定
         searchBtn.setOnClickListener {
@@ -48,15 +56,14 @@ class DeviceConnectActivity : BluetoothBasedActivity() {
                     searchBtn.isEnabled = true
 
                     // 可用设备列表
-                    foundDevices = foundDeviceNames()
+                    foundDevices.clear()
+                    for (name in foundDeviceNames()) {
+                        foundDevices.add(name)
+                    }
 
                     // 把列表写入listview中
                     if (foundDevices.size > 0) {
-
-                        val arrayAdapter = ArrayAdapter(this@DeviceConnectActivity,
-                            android.R.layout.simple_list_item_1, foundDevices)
-
-                        listView.adapter = arrayAdapter
+                        arrayAdapter.notifyDataSetChanged()
                     }
 
 //                    // 弹出式可选菜单
@@ -71,6 +78,7 @@ class DeviceConnectActivity : BluetoothBasedActivity() {
                 // 设置列表的点击事件
                 listView.setOnItemClickListener{ adapterView, view, position: Int, id: Long ->
                     bleDeviceSelected = foundDevices[position]
+                    adapterView.isSelected = true
                 }
             }
         }
