@@ -9,6 +9,7 @@ import android.view.MotionEvent
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ListView
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.petoi.kotlin.android.app.bluetooth.BluetoothBasedActivity
@@ -191,7 +192,7 @@ class MainActivity : BluetoothBasedActivity() {
         val btnRmv = findViewById<ImageButton>(R.id.btn_main_remove)
 
         btnAdd.setOnClickListener {
-            val intent = Intent(this@MainActivity, MotionsEditActivity::class.java)
+            val intent = Intent(this@MainActivity, EditorActivity::class.java)
             intent.putExtra("position", -1)
             intent.putExtra("cmdName", "")
             intent.putExtra("cmdDetail", "")
@@ -240,6 +241,9 @@ class MainActivity : BluetoothBasedActivity() {
                     if (key != "") {
                         // 从数据库中删除数据
                         sqliteDB.deleteInstruction(key)
+                    } else {
+                        Toast.makeText(this@MainActivity, "Cannot delete default actions",
+                            Toast.LENGTH_SHORT).show()
                     }
                 }
 

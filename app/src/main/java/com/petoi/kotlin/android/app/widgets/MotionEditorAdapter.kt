@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
-import com.petoi.kotlin.android.app.MotionsEditActivity
+import com.petoi.kotlin.android.app.EditorActivity
 import com.petoi.kotlin.android.app.R
 
 open class MotionEditorAdapter(
@@ -60,7 +60,7 @@ open class MotionEditorAdapter(
         // 对按键设置事件响应
         if (wrapper != null) {
             wrapper.getEditButton().setOnClickListener {
-                val intent = Intent(context, MotionsEditActivity::class.java)
+                val intent = Intent(context, EditorActivity::class.java)
                 intent.putExtra("position", position)
                 intent.putExtra("cmdName", commands[position].first)
                 intent.putExtra("cmdDetail", commands[position].second)

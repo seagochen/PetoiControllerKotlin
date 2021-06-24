@@ -1,14 +1,14 @@
 package com.petoi.kotlin.android.app
 
 import android.content.Intent
+import android.graphics.*
 import android.os.Bundle
 import android.util.Log
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import com.petoi.kotlin.android.app.bitmap.ImageBitmapTool
 import com.petoi.kotlin.android.app.bluetooth.BluetoothBasedActivity
+
 
 class CalibrationActivity : BluetoothBasedActivity() {
 
@@ -21,9 +21,13 @@ class CalibrationActivity : BluetoothBasedActivity() {
     // 选中的舵机
     private var selectedServo = 0
 
+    private var imgTool = ImageBitmapTool()
+
     // 绑定textview
     private fun bindTvOutput() {
         tvOutput = findViewById<TextView>(R.id.tv_calib_output)
+        setTextView(tvOutput)
+        startCalibListening()
     }
 
     // 退回按钮
@@ -59,9 +63,6 @@ class CalibrationActivity : BluetoothBasedActivity() {
         val addBtn = findViewById<ImageButton>(R.id.btn_calib_add)
         val desBtn = findViewById<ImageButton>(R.id.btn_calib_minus)
 
-        // 先读取当前被选中的舵机角度
-        var currentAngle = calib.angle(selectedServo)
-
         // 定义弹出框警告信息
         val alertBuilder = AlertDialog.Builder(this)
         alertBuilder
@@ -78,9 +79,11 @@ class CalibrationActivity : BluetoothBasedActivity() {
 
             if (!ret.first) {
                 alertBuilder.show()
+                return@setOnClickListener
             }
 
             send(ret.second)
+            updateServosInfoOnImage()
         }
 
         // fine subtraction
@@ -89,9 +92,11 @@ class CalibrationActivity : BluetoothBasedActivity() {
 
             if (!ret.first) {
                 alertBuilder.show()
+                return@setOnClickListener
             }
 
             send(ret.second)
+            updateServosInfoOnImage()
         }
     }
 
@@ -129,6 +134,7 @@ class CalibrationActivity : BluetoothBasedActivity() {
                     else -> btn.setText(resources.getString(R.string.servo0))
                 }
 
+                updateServosInfoOnImage()
                 dialog.dismiss()
             }
 
@@ -136,6 +142,49 @@ class CalibrationActivity : BluetoothBasedActivity() {
         btn.setOnClickListener {
             alertBuilder.show()
         }
+    }
+
+    private fun updateServosInfoOnImage() {
+        // display matric
+        val img = BitmapFactory.decodeResource(resources, R.drawable.illustration)
+//        val metrics = getResources().displayMetrics
+        val main = findViewById<ImageView>(R.id.img_calib_main)
+
+        // debug
+//        Log.d("CalibrationActivity", "screen size: $metrics")
+
+        // 创建bitmap copy并同时创建canvas
+//        val bitmap = Bitmap.createBitmap(metrics.widthPixels, metrics.heightPixels, Bitmap.Config.ARGB_8888)
+        val bitmap = Bitmap.createBitmap(main.width, main.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+
+        // 绘制参数设置
+        val paint = Paint()
+        paint.isAntiAlias = true
+        paint.isDither = true
+        paint.color = Color.DKGRAY
+        paint.textSize = 30F
+
+        // 绘制文本信息
+        var increase_y = 150F
+        for (i in 0..calib.count() - 1) {
+            canvas.drawText("Servo #${calib.name(i)} ...${calib.angle(i)}",
+                5F, increase_y, paint)
+            increase_y += 35F
+        }
+
+        // 绘制图片
+        val scale = main.height.toFloat() / img.height.toFloat()
+        val outImg = imgTool.scaleBitmap(img, scale)
+
+
+        if (outImg != null) {
+            val transx = img.width / 2
+            canvas.drawBitmap(outImg, transx.toFloat(), 0F, paint)
+        }
+
+        // update image
+        main.setImageBitmap(bitmap)
     }
 
 
@@ -151,12 +200,8 @@ class CalibrationActivity : BluetoothBasedActivity() {
         bindBackBtn()
         bindSaveBtn()
         bindFineAdjustBtn()
-        bindTvOutput()
         bindSevorSelectionBtn()
-
-        // 设置隐形输出，并启动监听
-        setTextView(tvOutput)
-        startCalibListening()
+        bindTvOutput()
     }
 
     // 业务关闭

@@ -26,7 +26,7 @@ open class BluetoothBasedActivity: AppCompatActivity() {
     private val calib = ApplicationData.calibration
 
     // 用于更新输出的内容
-    private var feedbackTextview: TextView? = null
+    private var tvOutput: TextView? = null
 
     // 用于控制子线程的标识符
     private var isTvUpdateRunning = false
@@ -144,6 +144,10 @@ open class BluetoothBasedActivity: AppCompatActivity() {
             handler.clear()
         }
 
+        // 清空输出
+        tvOutput?.setText("")
+        feedback = ""
+
         // 发送指令
         handler.send(msg)
 
@@ -165,8 +169,8 @@ open class BluetoothBasedActivity: AppCompatActivity() {
             // 尝试更新内容
             feedback += handler.recv()
             runOnUiThread {
-                if (feedbackTextview != null && feedback != "") {
-                    feedbackTextview!!.setText(feedback)
+                if (tvOutput != null && feedback != "") {
+                    tvOutput!!.setText(feedback)
                 }
             }
 
@@ -185,7 +189,7 @@ open class BluetoothBasedActivity: AppCompatActivity() {
     // textview 反馈部分
     protected fun setTextView(tv: TextView) {
         // 更新textview，并重新执行子线程更新任务
-        feedbackTextview = tv
+        tvOutput = tv
     }
 
     // 启动C监听
