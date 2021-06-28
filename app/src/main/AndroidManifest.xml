@@ -21,11 +21,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PetoiControllerKotlin">
-        <activity android:name=".UserDefineMotionActivity"/>
-        <activity android:name=".EditorActivity" />
         <activity android:name=".CalibrationActivity" />
+        <activity android:name=".LegalInfoActivity"/>
+        <activity android:name=".EditorActivity" />
         <activity android:name=".ConnectionActivity" />
-        
+
         <!-- MainActivity -->
         <activity  
             android:name=".MainActivity" 

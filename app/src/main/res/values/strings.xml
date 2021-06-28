@@ -49,4 +49,8 @@
     <!-- DeviceConnectActivity -->
     <string name="lb_connect_search">Search</string>
     <string name="lb_connect_connect">Connection</string>
+
+    <!-- LegalInfoActivity -->
+    <string name="btn_legal_agree">Agree</string>
+    <string name="btn_legal_disagree">Disagree</string>
 </resources>

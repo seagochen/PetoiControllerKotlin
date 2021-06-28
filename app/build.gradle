@@ -4,6 +4,14 @@
 }
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('D:\\Repositories\\JKS\\petoi_signed_apk.jks')
+            storePassword '123456'
+            keyPassword '123456'
+            keyAlias 'petoi_signed'
+        }
+    }
     compileSdkVersion 30 // 默认，编译的sdk版本
     buildToolsVersion "30.0.3" // 默认，编译的工具版本号
 
