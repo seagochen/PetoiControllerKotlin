@@ -40,7 +40,7 @@
                 android:layout_centerVertical="true"
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="30dp"
-                android:text="@string/lb_connect_search"/>
+                android:text="@string/lb_connect_research"/>
 
             <Button
                 android:id="@+id/btn_connect_connect"

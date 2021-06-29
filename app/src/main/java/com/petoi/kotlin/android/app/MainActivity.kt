@@ -14,6 +14,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.petoi.kotlin.android.app.bluetooth.BluetoothBasedActivity
 import com.petoi.kotlin.android.app.database.DatabaseHelper
+import com.petoi.kotlin.android.app.properties.PetoiPreferences
 import com.petoi.kotlin.android.app.widgets.MainPopupMenu
 import com.petoi.kotlin.android.app.widgets.MotionEditorAdapter
 
@@ -32,6 +33,7 @@ class MainActivity : BluetoothBasedActivity() {
     private var itemState: MotionItemState = MotionItemState.NORMAL
     private val sqliteDB = DatabaseHelper(this)
     private lateinit var editAdapter: MotionEditorAdapter
+    private lateinit var preferences: PetoiPreferences
 
     // 绑定弹出菜单
     private fun bindPopupMenu() {
@@ -258,11 +260,24 @@ class MainActivity : BluetoothBasedActivity() {
         }
     }
 
+    private fun firstLaunchShowActivities() {
+        preferences = PetoiPreferences(this)
+
+        if (preferences.isFirstTime(this)) {
+            intent = Intent(this, DeviceSelectionActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+    }
+
     // Android Activity初始化后的调用函数
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
         setContentView(R.layout.activity_main)
+
+        // 如果第一次启动
+        firstLaunchShowActivities()
 
         // 绑定Android控件和它们应该对应的消息事件
         bindPopupMenu()

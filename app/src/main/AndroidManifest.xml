@@ -25,6 +25,7 @@
         <activity android:name=".LegalInfoActivity"/>
         <activity android:name=".EditorActivity" />
         <activity android:name=".ConnectionActivity" />
+        <activity android:name=".DeviceSelectionActivity"/>
 
         <!-- MainActivity -->
         <activity  

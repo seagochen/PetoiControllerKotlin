@@ -6,7 +6,7 @@ import android.view.Surface
 import android.view.SurfaceHolder
 
 class VideoSurfaceHolder: SurfaceHolder {
-    
+
     override fun addCallback(callback: SurfaceHolder.Callback?) {
         TODO("Not yet implemented")
     }

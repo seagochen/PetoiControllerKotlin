@@ -47,7 +47,7 @@
     <string name="lb_motion_action">Action</string>
 
     <!-- DeviceConnectActivity -->
-    <string name="lb_connect_search">Search</string>
+    <string name="lb_connect_research">Research</string>
     <string name="lb_connect_connect">Connection</string>
 
     <!-- LegalInfoActivity -->
